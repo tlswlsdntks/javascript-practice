@@ -85,3 +85,25 @@ result += null;
 result += undefined;
 console.log(result);
 console.log(typeof result);
+
+// isNaN과 Number.isNaN의 차이
+// 구분							isNaN()												Number.isNaN()
+// 강제 변환 여부			O (인자를 숫자로 변환 후 검사)		X (인자를 그대로 검사)
+// 정확성						문자열 등도 NaN 으로 간주 가능		실제 NaN(숫자 자료형)인 지 여부만 판단
+
+// 특정 숫자로 변환 가능한 문자
+console.log(
+  typeof '1', isNaN('1'), Number.isNaN('1') // string false false
+);
+// true는 1, false는 0으로 변환됨
+console.log(
+  typeof true, isNaN(true), Number.isNaN(true) // boolean false false
+); 
+// ⚠️ 특정 숫자로 변환 불가인 문자의 경우 차이
+console.log(
+  typeof 'a', isNaN('a'), Number.isNaN('a') // string true false
+); 
+// NaN 인 경우
+console.log(
+  typeof (1/'a'), isNaN(1/'a'), Number.isNaN(1/'a') // number true true
+); 
