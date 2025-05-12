@@ -20,3 +20,14 @@ console.log('Hello'); // 이렇게 코드 옆에 다는 것도 가능
 */
 console.log('찍힘');
 console.log('찍힘');
+
+console.log('Hello', '철수');
+
+// 값들을 주머니에 담아 사용하기
+const SALUTATION = 'Hello,';
+let person = '철수';
+console.log(SALUTATION, person);
+
+person = '영희';
+console.log(SALUTATION, person);
+
