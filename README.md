@@ -65,7 +65,6 @@
 		💡 소프트웨어 외적으로는 영향을 끼치지 않음 - 개발자용 기능
 			콘솔을 열어 확인하지 않는 이상 보이지 않음
 
-
 	흔히 활용되는 console 기능들
  		> console.log('로그 - 기본적인 출력');
 		> console.info('로그 - 기능적으로는 log 와 같음. 브라우저에 따라 용도 구분 가능);
@@ -73,7 +72,6 @@
 		> console.warn('경고 - 문제가 될 수 있는 부분');
 		> console.error('오류 - 에러 발생 상황');
  
-
 	주석 comment - 컴퓨터는 무시하는 메시지
 		사람에게 보여줄 목적으로 작성
 		코드에 대한 설명, 추후 진행해야 할 사항 등...
@@ -106,6 +104,7 @@
 	자바스크립트와 세미콜론 ( ; )
 		필요성에 대해 다양한 의견
 		본 강좌에서는 붙이는 것으로 진행
+
 
 변수와 상수 - 데이터를 담는 주머니
 	⚠️ var는 역사의 뒤안길로
@@ -140,7 +139,6 @@
 			console.log(x);
 			메모리상으로는 선언과 초기화를 따로 하는 것과 동일
 			undefined 할당 후 재할당
-
 
 		3. 다른 변수가 같은 값을 가질 때
 			let x = 1;
@@ -230,25 +228,75 @@
 		사람(CPU)이 서랍(보조기억장치)에 든 데이터를 꺼내 올려두고 작업을 하는 공간
 		변수와 상수를 비롯한 데이터들이 이곳에 만들어지고 사용됨
 
+자료형 - 데이터의 종류
+	자바스크립트의 원시 자료형 (primitive data types)
+		담백하게 값 하나만 담는 단순 자료형
+		const a = true, b = 123.45, c = '안녕하세요!';
 
+	typeof 연산자:
+		뒤에 오는 값의 자료형을 반환
+		console.log(a, typeof a); // true boolean
+		console.log(b, typeof b); // 123.45 number
+		console.log(c, typeof c); // 안녕하세요! string
+		let d;
+		console.log(d, typeof d); // undefined undefined
+		d = null;
+		console.log(d, typeof d); // ⚠️ 'object' 반환
+		const e = Symbol('hello');
+		console.log(typeof e); // symbol, 이건 나중에
 
+	1. 불리언 (boolean)
+		참 또는 거짓 (true or false)
+		const a = 1 > 2;
+		const b = 1 < 2;
+		console.log(a, typeof a);
+		console.log(b, typeof b);
 
+	2. 숫자 (number)
+		자바스크립트에는 정수와 실수의 구분이 없음 - 정수도 실수로 처리
+		정수는 2^53 - 1까지 안정적으로 표현 가능 - 더 큰 정수는 이후 배울 BigInt 로
+		let integer = 100;
+		let real = 12.34;
+		let negative = -99;
+		console.log(integer, real, negative);
 
+	3. 문자열 (string)
+		큰 따옴표, 작은 따옴표, 또는 백틱으로 둘러싸인 텍스트 데이터
+		let first_name = "Brendan";
+		let last_name = 'Eich';
+		let description = `미국의 프로그래머로 자바스크립트 언어를 만들었으며 모질라의 CEO와 CTO를 역임했다.`;
+		console.log(first_name, last_name);
+		console.log(description);
+		🔗 유니코드 문자 - 전 세계의 모든 문자 표현 가능
+		💡 typeof의 반환값은 문자열
+				console.log(
+					typeof (typeof true),
+					typeof (typeof 123.45),
+					typeof (typeof 'Hello'),
+				);
 
+	4. undefined
+		값이 부여되지 않은 상태라는 의미
+		⭐️ 그러나 undefined도 값임 많은 다른 언어들과 다른 점
+		아무 것도 반환하지 않는 구문 - undefined 반환
+		let x;
+		console.log(typeof x);
+		> undefined
+		> undefined
+		
+	5. null
+		의도적인 빈 값을 의미
+		⭐️ 그러나 null 역시 값임. - "비어있다"란 의미의 값
+		let x;
+		console.log('값 넣기 전', typeof x); // 값 넣기 전 undefined
+		x = null;
+		console.log('null값 넣은 후', typeof x); // null값 넣은 후 object
 
+	⚠️ 주의! typeof 가 object 를 반환
+		초기 오류 - 객체는 원시타입이 아님
+		let x = null;
+		console.log(typeof null, typeof x);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	⭐️ null 여부는 아래와 같이 확인할 것
+		console.log(x === null);
 

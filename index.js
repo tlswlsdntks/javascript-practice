@@ -31,3 +31,9 @@ console.log(SALUTATION, person);
 person = '영희';
 console.log(SALUTATION, person);
 
+let d;
+console.log(d, typeof d);
+d = null;
+console.log(d, typeof d); // ⚠️ 'object' 반환
+const e = Symbol('hello');
+console.log(typeof e); // 이건 나중에
