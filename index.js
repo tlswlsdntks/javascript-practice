@@ -37,3 +37,16 @@ d = null;
 console.log(d, typeof d); // ⚠️ 'object' 반환
 const e = Symbol('hello');
 console.log(typeof e); // 이건 나중에
+
+/* 
+  템플릿 리터럴
+  ${}안에 상수나 변수, 표현식 등을 삽입 가능
+  다른 자료형도 사용할 수 있음
+*/
+const NAME = '홍길동';
+let age = 20;
+let married = false;
+console.log(
+`제 이름은 ${NAME}, 나이는 ${age}세구요, \
+${married ? '기혼' : '미혼'}입니다.`
+);
