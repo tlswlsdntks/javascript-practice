@@ -1,17 +1,22 @@
+/**
+ * 콘솔 활용하기
+ */
 console.log('Hello World!');
 console.log(1);
 console.log(true);
 console.log({name: '홍길동', age: 20, married: false});
 console.log('Hi!', 100, true, [1,2,3]);
 
+
+/**
+ * 주석과 세미콜론
+ */
 console.log('Hello');
 // 사뿐히 즈려밟고 가시옵소서
 // console.log('나를 밟고 가라');
 console.log('World');
-
 // 한 줄 짜리 주석
 console.log('Hello'); // 이렇게 코드 옆에 다는 것도 가능
-
 /*
   주석은 이와 같이 여러 줄에 걸쳐 작성할 수도 있습니다.
   console.log('안찍힘');
@@ -21,23 +26,33 @@ console.log('Hello'); // 이렇게 코드 옆에 다는 것도 가능
 console.log('찍힘');
 console.log('찍힘');
 
-console.log('Hello', '철수');
 
+/**
+ * 변수와 상수 - 데이터를 담는 주머니
+ */
+console.log('Hello', '철수');
 // 값들을 주머니에 담아 사용하기
 const SALUTATION = 'Hello,';
 let person = '철수';
 console.log(SALUTATION, person);
-
 person = '영희';
 console.log(SALUTATION, person);
 
+
+/**
+ * 자료형 - 데이터의 종류
+ */
 let d;
 console.log(d, typeof d);
 d = null;
-console.log(d, typeof d); // ⚠️ 'object' 반환
+console.log(d, typeof d); // 'object' 반환
 const e = Symbol('hello');
 console.log(typeof e); // 이건 나중에
 
+
+/**
+ * 문자열(string) - 텍스트 데이터
+ */
 /* 
   템플릿 리터럴
   ${}안에 상수나 변수, 표현식 등을 삽입 가능
@@ -51,6 +66,10 @@ console.log(
 ${married ? '기혼' : '미혼'}입니다.`
 );
 
+
+/**
+ * 문자열에 사용되는 연산자
+ */
 // <, <=, >, >= - 사전순 비교
 // 일반적으로 사전순(알파벳 순서)은 대문자가 소문자보다 먼저 온다.
 console.log(
@@ -59,7 +78,8 @@ console.log(
   '가나다' > '라마바',
   '안녕' >= '안녕'
 );
-// ⚠️ 숫자 문자열 관련 주의!
+
+// 숫자 문자열 관련 주의!
 console.log(
   100 > 12, // 숫자는 그 자체로 비교
   '100' > '12', // 문자는 사전순으로 비교('1'과 '1'은 같고, 다음으로 '0'과 '2'를 비교하게 됩니다.)
@@ -79,13 +99,17 @@ lyric2 += '\n언제나 즐거워';
 lyric2 += '\n뽀롱뽀롱뽀롱뽀롱 뽀로로';
 console.log(lyric2);
 
-// 💡 다른 자료형과 더하면 문자열 반환
+// 다른 자료형과 더하면 문자열 반환
 let result = '안녕' + 1 + true;
 result += null;
 result += undefined;
 console.log(result);
 console.log(typeof result);
 
+
+/**
+ * 숫자(Number)와 관련 연산자
+ */
 // isNaN과 Number.isNaN의 차이
 // 구분							isNaN()												Number.isNaN()
 // 강제 변환 여부			O (인자를 숫자로 변환 후 검사)		X (인자를 그대로 검사)
@@ -108,24 +132,83 @@ console.log(
   typeof (1/'a'), isNaN(1/'a'), Number.isNaN(1/'a') // number true true
 ); 
 
+
+/**
+ * 부동소수점과 실수계산 오차
+ */
 console.log(
   0.1 + 0.2,
   0.1 + 0.2 === 0.3
 );
+
 let x = 0.1 * 10;
 let y = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1;
 console.log(
   x, y, x === y
 );
+
 console.log(
   0.2 * 0.7,
   0.4 * 3,
   0.9 - 0.6,
   0.9 - 0.3
 );
-// ⭐️ 2의 거듭제곱으로 나눈 수의 계산은 정확
+
+// 2의 거듭제곱으로 나눈 수의 계산은 정확
 console.log(
   0.25 * 0.5,
   0.5 + 0.25 + 0.125 + 0.125,
   0.0625 / 0.25
+);
+
+
+/**
+ * 불리언(boolean)과 관련 연산자
+ */
+// 드 모르간의 법칙
+let a = true;
+// a = false;
+let b = true;
+// b = false;
+console.log(
+  !(a && b) === (!a || !b),
+  !(a || b) === (!a && !b)
+); // 항상 true
+
+x = true;
+// x = false;
+// &&, || 연산자는 값 자체를 반환
+y = x && 'abc';
+let z = x || 123;
+console.log(y, z); // 'abc' true
+
+x = 2;
+y = 3;
+console.log(
+  x % 2 ? '홀' : '짝',
+  y % 2 ? '홀' : '짝'
+);
+
+// boolean으로 직접변환
+console.log(
+  1, -999, 'hello',
+  0, '', null
+);
+
+// 한 번 부정
+console.log(
+  !1, !-999, !'hello',
+  !0, !'', !null
+);
+
+// 두 번 부정하여 해당 boolean값으로
+console.log(
+  !!1, !!-999, !!'hello',
+  !!0, !!'', !!null
+);
+
+x = 123;
+console.log(
+  'x는 홀수인가?',
+  !!(x % 2)
 );
