@@ -349,3 +349,36 @@ function evalNum () {
   console.log('4의 배수입니다.');
 }
 evalNum();
+
+
+/**
+ * switch
+ */
+const direction = 'north'
+let directionKor;
+switch (direction) {
+  case 'north':
+    directionKor = '북';
+    break;
+  case 'south':
+    directionKor = '남';
+    break;
+  case 'east':
+    directionKor = '동';
+    break;
+  case 'west':
+    directionKor = '서';
+    break;
+  default:
+    directionKor = '무효';
+}
+console.log(directionKor);
+
+// 객체를 사용한 방법
+const directionKor2 = {
+  north: '북',
+  south: '남',
+  east: '동',
+  west: '서'
+}[direction] ?? '무효'
+console.log(directionKo2);
