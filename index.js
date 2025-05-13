@@ -516,3 +516,104 @@ const div = function (x, y) {
 
 console.log(div(8, 4));
 const div2 = (x, y) => x / y;
+
+
+/**
+ * 일급 함수
+ */
+// 객체와 배열의 값으로도 할당 가능
+person = {
+  name: '홍길동',
+  age: 30,
+  married: true,
+  introduce: function (formal) {
+    // 객체의 함수 프로퍼티를 메서드 method 라고 불렀음
+    // ⚠️ ES6부터는 메서드의 정의가 달라짐 - 이후 배울 단축 표현 메서드만 가리킴
+    return formal
+    ? '안녕하십니까. 홍길동 대리라고 합니다.'
+    : '안녕하세요, 홍길동이라고 해요.';
+  }
+};
+console.log(person.introduce(true)); // 안녕하십니까. 홍길동 대리라고 합니다.
+console.log(person.introduce(false)); // 안녕하세요, 홍길동이라고 해요.
+
+// 객체에 함수 프로퍼티를 포함할 때 기억할 것
+// 화살표 함수로 바꾸고 실행해보기
+person = {
+  name: '홍길동',
+  age: 30,
+  married: true,
+  introduce: function () {
+    // 💡 객체의 다른 프로퍼티에 접근: this 사용
+    // ⚠️ 객체 리터럴의 프로퍼티로는 this 사용하는 화살표 함수 권장하지 않음
+    // 자세한 내용은 이후 this 섹션에서 다룰 것
+    return `저는 ${this.name}, ${this.age}살이고 ${this.married ? '기혼' : '미혼'}입니다.`;
+  },
+  introduce2: () => `저는 ${this.name}, ${this.age}살이고 ${this.married ? '기혼' : '미혼'}입니다.`
+}
+console.log(person.introduce()); // 저는 홍길동, 30살이고 기혼입니다.
+console.log(person.introduce2()); // 저는 , undefined살이고 미혼입니다.
+
+// 익명 함수
+// calc
+const add = (a, b) => a + b;
+const sub = (a, b) => a - b;
+const mul = (a, b) => a * b;
+// eval
+const isOdd = (number) => !!(number % 2);
+const isPositive = (number) => number > 0;
+
+function calcAndEval (calc, eval, x, y) {
+  return eval(calc(x, y));
+}
+console.log(
+  calcAndEval(add, isOdd, 5, 7), // false
+  calcAndEval(sub, isPositive, 5, 7), // false
+  calcAndEval(mul, isOdd, 5, 7) // true
+);
+// calcAndEval : 고차 함수
+// add, sub, mul, isOdd, isPositive : 콜백 함수
+
+// 커링 : 필요한 인자보다 적은 수의 인자를 받으면, 나머지 인자를 인자로 받는 다른 함수를 반환
+function curryAddMultSub (a) {
+  return function (b) {
+    return function (c) {
+      return function (d) {
+        return (a + b) * c - d;
+      }
+    }
+  }
+}
+console.log(
+  curryAddMultSub(2)(3)(4)(5),
+  curryAddMultSub(2)(3)(4)(5)
+);
+const curryAddMultSubFrom2 = curryAddMultSub(2);
+const curryMultSubFrom5 = curryAddMultSub(2)(3);
+const currySubFrom20 = curryAddMultSub(2)(3)(4);
+console.log(curryAddMultSubFrom2);
+console.log(curryMultSubFrom5);
+console.log(currySubFrom20);
+console.log(
+  curryAddMultSubFrom2(3)(4)(5),
+  curryMultSubFrom5(4)(5),
+  currySubFrom20(5)
+);
+
+// 화살표 함수로 바꾸어 다시 실행해 볼 것
+const curryAddMultSub2 = a => b => c => d => (a + b) * c - d;
+console.log(
+  curryAddMultSub2(2)(3)(4)(5),
+  curryAddMultSub2(2)(3)(4)(5)
+);
+const curry2AddMultSubFrom2 = curryAddMultSub2(2);
+const curry2MultSubFrom5 = curryAddMultSub2(2)(3);
+const curry2SubFrom20 = curryAddMultSub2(2)(3)(4);
+console.log(curry2AddMultSubFrom2); // b => c => d => (a + b) * c - d
+console.log(curry2MultSubFrom5); // c => d => (a + b) * c - d
+console.log(curry2SubFrom20); // d => (a + b) * c - d
+console.log(
+  curry2AddMultSubFrom2(3)(4)(5),
+  curry2MultSubFrom5(4)(5),
+  curry2SubFrom20(5)
+);

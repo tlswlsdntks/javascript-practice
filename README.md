@@ -1712,3 +1712,197 @@ while과 do while
 
 			console.log(div(8, 4));
 			const div = (x, y) => x / y;
+
+
+일급 객체
+	일급 객체 First Class Object
+		함수를 변수와 같이 다루는 언어에 있는 개념
+		자바스크립트의 함수, 일급 객체 함수는 기본적으로 객체
+		// ⭐️ 함수의 자료형
+		function addNumbers (a, b) { return a + b; }
+		console.log(typeof addNumbers); // function
+		console.log(addNumbers instanceof Object); // true
+
+	일급 객체의 특성
+		상수 또는 변수에 '할당' 될 수 있음
+		다른 함수에 '인자로 전달' 될 수 있음
+		다른 함수의 결과값으로서 '반환' 될 수 있음
+
+		I. 할당
+ 			// 함수도 객체와 배열처럼 참조타입
+				function isOddNum (number) {
+					console.log((number % 2 ? '홀' : '짝')+ '수입니다.');
+					return number % 2 ? true : false;
+				};
+				const checkIfOdd = isOddNum; // 뒤에 괄호 없음 유의
+				console.log(checkIfOdd); // ƒ
+				checkIfOdd(23) // 홀수입니다.
+
+				let x = 7, y = 3;
+				let add = (a, b) => a + b;
+				let sub = (a, b) => a - b;
+				console.log(add(x, y), sub(x, y)); // 10 4
+
+			💡 객체와 배열의 값으로도 할당 가능
+				let person = {
+					name: '홍길동',
+					age: 30,
+					married: true,
+					introduce: function (formal) {
+						// 객체의 함수 프로퍼티를 메서드 method 라고 불렀음
+						// ⚠️ ES6부터는 메서드의 정의가 달라짐 - 이후 배울 단축 표현 메서드만 가리킴
+						return formal
+						? '안녕하십니까. 홍길동 대리라고 합니다.'
+						: '안녕하세요, 홍길동이라고 해요.';
+					}
+				};
+				console.log(person.introduce(true)); // 안녕하십니까. 홍길동 대리라고 합니다.
+				console.log(person.introduce(false)); // 안녕하세요, 홍길동이라고 해요.
+ 				
+			⭐️ 객체에 함수 프로퍼티를 포함할 때 기억할 것
+				화살표 함수로 바꾸고 실행해보기
+				let person = {
+					name: '홍길동',
+					age: 30,
+					married: true,
+					introduce: function () {
+						// 💡 객체의 다른 프로퍼티에 접근: this 사용
+						// ⚠️ 객체 리터럴의 프로퍼티로는 this 사용하는 화살표 함수 권장하지 않음
+						// 자세한 내용은 이후 this 섹션에서 다룰 것
+						return `저는 ${this.name}, ${this.age}살이고 ${this.married ? '기혼' : '미혼'}입니다.`;
+					},
+					introduce2: () => `저는 ${this.name}, ${this.age}살이고 ${this.married ? '기혼' : '미혼'}입니다.`
+				}
+				console.log(person.introduce()); // 저는 홍길동, 30살이고 기혼입니다.
+				console.log(person.introduce2()); // 저는 , undefined살이고 미혼입니다.
+
+		II. 인자로 전달
+			함수가 다른 함수를 인자로 전달받음
+				전달 받는 함수 : 고차 함수 (highter-order function)
+				전달 되는 함수 : 콜백 함수 (callback function)
+				
+				let list = [1, 2, 3, 4, 5];
+				function doInArray (list, func) {
+					for (item of list) {
+						func(item);
+					}
+				}
+				// console이란 객체에서 log란 키에 할당된 함수
+				console.log // ƒ log() { [native code] }
+				doInArray(list, console.log);
+				doInArray : 고차 함수
+				console.log : 콜백 함수
+
+			인자로 전달된 함수들 : 변수나 상수에 할당되지 않아 이름이 없음 - 익명 함수 (anonymous function)
+				// calc
+				const add = (a, b) => a + b;
+				const sub = (a, b) => a - b;
+				const mul = (a, b) => a * b;
+				// eval
+				const isOdd = (number) => !!(number % 2);
+				const isPositive = (number) => number > 0;
+				
+				function calcAndEval (calc, eval, x, y) {
+					return eval(calc(x, y));
+				}
+				console.log(
+					calcAndEval(add, isOdd, 5, 7), // false
+					calcAndEval(sub, isPositive, 5, 7), // false
+					calcAndEval(mul, isOdd, 5, 7) // true
+				);
+				calcAndEval : 고차 함수
+				add, sub, mul, isOdd, isPositive : 콜백 함수
+				💡 이후 섹션의 함수형 프로그래밍에 유용하게 사용됨
+
+		III. 결과값으로 반환
+			function getIntroFunc (name, formal) {
+				return formal
+				? function () {
+					console.log(`안녕하십니까, ${name}입니다.`);
+				} : function () {
+					console.log(`안녕하세요~ ${name}이라고 해요.`);
+				}
+			}
+			const hongIntro = getIntroFunc('홍길동', true);
+			const jeonIntro = getIntroFunc('전우치', false);
+			hongIntro(); // 안녕하십니까, 홍길동입니다.
+			jeonIntro(); // 안녕하세요~ 전우치이라고 해요.
+
+			// cal
+			const add = (a, b) => a + b;
+			const sub = (a, b) => a - b;
+			const mul = (a, b) => a * b;
+			const div = (a, b) => a / b;
+
+			function comb3ArmFuncs(armFunc1, armFunc2, armFunc3) {
+				return (x, y) => armFunc3(armFunc2(armFunc1(x, y), y), y);
+			}
+
+			const add_mul_sub = comb3ArmFuncs(add, mul, sub);
+			const mul_add_div = comb3ArmFuncs(mul, add, div);
+			const div_add_mul = comb3ArmFuncs(div, add, mul);
+			console.log(
+				add_mul_sub(10, 4), // 52
+				mul_add_div(10, 4), // 11
+				div_add_mul(10, 4)	// 26
+			);
+
+		💡 커링 (currying)
+			필요한 인자보다 적은 수의 인자를 받으면, 나머지 인자를 인자로 받는 다른 함수를 반환
+			// 기존의 코드
+			function addMultSub (a, b, c, d) {
+				return (a + b) * c - d;
+			}
+			const addMultSub2 = (a, b, c, d) => (a + b) * c - d;
+			console.log(
+				addMultSub(2, 3, 4, 5),
+				addMultSub2(2, 3, 4, 5),
+			);
+
+			// ⭐ 커링으로 작성된 함수
+			function curryAddMultSub (a) {
+				return function (b) {
+					return function (c) {
+						return function (d) {
+							return (a + b) * c - d;
+						}
+					}
+				}
+			}
+			console.log(
+				curryAddMultSub(2)(3)(4)(5),
+				curryAddMultSub(2)(3)(4)(5)
+			);
+			const curryAddMultSubFrom2 = curryAddMultSub(2);
+			const curryMultSubFrom5 = curryAddMultSub(2)(3);
+			const currySubFrom20 = curryAddMultSub(2)(3)(4);
+			console.log(curryAddMultSubFrom2);
+			console.log(curryMultSubFrom5);
+			console.log(currySubFrom20);
+			console.log(
+				curryAddMultSubFrom2(3)(4)(5),
+				curryMultSubFrom5(4)(5),
+				currySubFrom20(5)
+			);
+			
+			// 화살표 함수로 바꾸어 다시 실행해 볼 것
+			const curryAddMultSub2 = a => b => c => d => (a + b) * c - d;
+			console.log(
+				curryAddMultSub2(2)(3)(4)(5),
+				curryAddMultSub2(2)(3)(4)(5)
+			);
+			const curryAddMultSubFrom2 = curryAddMultSub2(2);
+			const curryMultSubFrom5 = curryAddMultSub2(2)(3);
+			const currySubFrom20 = curryAddMultSub2(2)(3)(4);
+			console.log(curryAddMultSubFrom2);
+			console.log(curryMultSubFrom5);
+			console.log(currySubFrom20);
+			console.log(
+				curryAddMultSubFrom2(3)(4)(5),
+				curryMultSubFrom5(4)(5),
+				currySubFrom20(5)
+			);
+
+		⭐️ 하나의 함수는 한 가지 일만 하도록
+			하나의 함수가 여러 일을 수행하면 이후 코드를 수정하기 복잡해짐
+			각자 하나의 일을 하는 여러 함수들의 조합을 사용할 것
