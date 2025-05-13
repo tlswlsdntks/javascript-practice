@@ -846,7 +846,7 @@
 						NaN == false,
 					);
 
-				예시
+				활용예
 					let x = 0;
 					let y = 1;
 					x && x++;
@@ -892,3 +892,78 @@
 					'x는 홀수인가?',
 					!!(x % 2)
 				);
+
+
+연산자 마무리
+	I. 기타 연산자들
+		1. 쉼표 연산자
+			왼쪽부터 차례로 실행, 마지막 것 반환
+			let x = 1, y = 2, z = 3;
+			console.log(x, y, z); // 1 2 3
+
+			// ⭐️ 마지막으로 실행한 것 반환
+			console.log(
+				(++x, y += x, z *= y) // 12
+			);
+
+		2. ?? - null 병합 연산자
+			||와 달리, falsy가 아닌 null 또는 undefined 만 대체
+			let x; // undefined
+			x ?? console.warn(x, 'x에 값이 없습니다.'); // undefined 'x에 값이 없습니다.'
+			x = 0;
+			x ?? console.warn(x, 'x에 값이 없습니다.');
+			x = null;
+			x ?? console.warn(x, 'x에 값이 없습니다.'); // null 'x에 값이 없습니다.'
+
+			let a = false;
+			let b = 0;
+			let c = '';
+			let d = null;
+			let e;
+			console.log(
+				a ?? '기본값', // false
+				b ?? '기본값', // 0
+				c ?? '기본값', // ''
+				d ?? '기본값', // '기본값'
+				e ?? '기본값', // '기본값'
+			);
+
+			활용예
+				let baby1 = '홍길동';
+				let baby2; // 아직 이름을 짓지 못함
+				const nameTag1 = baby1 ?? '1번 아기';
+				const nameTag2 = baby2 ?? '2번 아기';
+				console.log(nameTag1, nameTag2); // 홍길동 2번 아기
+
+			병합 할당 연산자들
+				let x = 0;
+				let y = '';
+				let z = null;
+				x ||= 100;
+				y &&= '있어야 바뀜';
+				z ??= '기본값';
+				console.log(x, y, z); // 100 '' '기본값'
+
+	II. 연산자의 우선순위
+		💡 우선순위 높은순 현재까지 다룬 연산자들 중
+		순위	연산자들
+		1			!, +, -, ++, --, typeof
+		2			**
+		3			*, /, %
+		4			+, -
+		5			<, <=, >, >=
+		6			==, !=, ===, !==
+		7			&&
+		8			||
+		9			=, +=, -=, *=, /=, %=, **=, &&=, ||=, ??=
+		10		,
+
+		let x = 1;
+		let y = 19 === 3 + 4 * 2 ** ++x;
+		console.log(y); // true
+
+		console.log(
+			2 > 3 || 4 % 2 === 0, // true
+			2 > (3 || 4) % 2 === 0, // false
+			2 > 3 || 4 % (2 === 0) // NaN
+		);

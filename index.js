@@ -212,3 +212,24 @@ console.log(
   'x는 홀수인가?',
   !!(x % 2)
 );
+
+
+/**
+ * 연산자 마무리
+ */
+// 마지막으로 실행한 것 반환
+console.log(
+  (++x, y += x, z *= y) // 12
+);
+
+let baby1 = '홍길동';
+let baby2; // 아직 이름을 짓지 못함
+const nameTag1 = baby1 ?? '1번 아기';
+const nameTag2 = baby2 ?? '2번 아기';
+console.log(nameTag1, nameTag2); // 홍길동 2번 아기
+  
+console.log(
+  2 > 3 || 4 % 2 === 0, // true
+  2 > (3 || 4) % 2 === 0, // false
+  2 > 3 || 4 % (2 === 0) // NaN
+);
