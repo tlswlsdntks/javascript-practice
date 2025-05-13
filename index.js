@@ -322,3 +322,30 @@ console.log(xx, yy); // 0 'Hello!'
   // ⚠️ const, let을 빼먹으면 재선언이 아니라 바깥것의 값을(변수면) 바꿈!
 }
 console.log(xx, yy); // 0 'Hello!'
+
+/**
+ * if / else
+ */
+x = 21;
+if (x % 2) {
+  console.log('홀수입니다.');
+} else if (x % 4) {
+  console.log('짝수입니다.');
+} else {
+  console.log('4의 배수입니다.');
+}
+
+// 보다 권장되는 방식
+function evalNum () {
+  const x = 21;
+  if (x % 2) {
+    console.log('홀수입니다.');
+    return;
+  }
+  if (x % 4) {
+    console.log('짝수입니다.');
+    return;
+  }
+  console.log('4의 배수입니다.');
+}
+evalNum();
