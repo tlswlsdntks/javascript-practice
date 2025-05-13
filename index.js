@@ -433,3 +433,43 @@ for (let i = 1; i < 10; i++) {
   }
 }
 
+
+/**
+ * while과 do while
+ */
+x = 0;
+while (x < 14) {
+  if (x % 2 === 0) continue;
+  if (x > 7) break;
+  console.log(x++);
+}
+
+// 가독성 위주로 짠 코드
+// 코드에 의도가 드러나도록
+x = 0;
+while (x < 14) {
+  const toContinue = x % 2 === 0;
+  const toBreak = x > 7;
+  const xNow = x++;
+
+  if (toContinue) continue;
+  if (toBreak) break;
+  console.log(xNow);
+}
+
+// 더 짧고도 직관성을 유지한 코드의 예
+x = 0;
+while (x < 14) {
+  const xNow = x++;
+
+  if (xNow % 2 === 0) continue;
+  if (xNow > 7) break;
+  console.log(xNow);
+}
+
+// do while - 일단 수행하고 조건을 평가
+x = 12;
+do {
+  x++
+} while (x < 10);
+console.log(x); // 13

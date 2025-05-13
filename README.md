@@ -1504,3 +1504,77 @@ for 루프
 					console.log(i, j, i * j);
 				}
 			}
+
+
+while과 do while
+	while - 조건이 참인 동안 반복수행
+		let x = 0;
+		while (x < 10) {
+			console.log(x++);
+		}
+
+		💡 무한루프
+		let x = 0;
+		while (x < 10) {
+			console.log(x);
+		}
+
+		// 인위적인 무한반복에 널리 쓰이는 코드
+		while (true) {
+			console.log('무한반복');
+		}
+
+		// break문으로 무한반복 탈출 가능
+		let x = 0;
+		while (true) {
+			if (x++ >= 5) break;
+			console.log(x);
+		}
+
+	continue와 break 사용
+		// 1, 3, 5, 7을 의도한 코드. 그러나...
+		// ⚠️ 무한루프! 왜일까요?
+		let x = 0;
+		while (x < 14) {
+			if (x % 2 === 0) continue;
+			if (x > 7) break;
+			console.log(x++);
+		}
+
+		// 짧게 짠 수정 코드
+		let x = 0;
+		while (x < 14) {
+			if (x++ % 2 === 0) continue;
+			if (x > 8) break;
+			console.log(x - 1);
+		}
+ 
+		// 가독성 위주로 짠 코드
+		// 코드에 의도가 드러나도록
+		let x = 0;
+		while (x < 14) {
+			const toContinue = x % 2 === 0;
+			const toBreak = x > 7;
+			const xNow = x++;
+
+			if (toContinue) continue;
+			if (toBreak) break;
+			console.log(xNow);
+		}
+ 
+ 		// 더 짧고도 직관성을 유지한 코드의 예
+		let x = 0;
+		while (x < 14) {
+			const xNow = x++;
+
+			if (xNow % 2 === 0) continue;
+			if (xNow > 7) break;
+			console.log(xNow);
+		}
+
+	do while - 일단 수행하고 조건을 평가
+		let x = 12;
+		do {
+			x++
+		} while (x < 10);
+		console.log(x); // 13
