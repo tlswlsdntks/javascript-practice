@@ -437,6 +437,7 @@ for (let i = 1; i < 10; i++) {
 /**
  * while과 do while
  */
+// 무한반복
 x = 0;
 while (x < 14) {
   if (x % 2 === 0) continue;
@@ -473,3 +474,45 @@ do {
   x++
 } while (x < 10);
 console.log(x); // 13
+
+
+/**
+ * 함수의 의미와 사용법
+ */
+function isOdd (x) {
+  return !!(x % 2);
+}
+function isEven (x) {
+  return !(x % 2);
+}
+let num = 12;
+console.log(
+  `${num}(는)은 ${isOdd(num) ? '홀' : '짝'}수입니다.`,
+  `${num}(는)은 ${isEven(num) ? '짝' : '홀'}수입니다.`
+);
+
+let currentTemp = 24.5;
+function logCurrentTemp () {
+  console.log(`현재 온도는 섭씨 ${currentTemp}도입니다.`);
+  return `${currentTemp}`;
+}
+console.log('반환값:', logCurrentTemp()); // 반환값: undefined
+// undefined가 뜨는 이유
+// return 문이 정의되어 있지 않으면 undefined 반환
+
+// 호이스팅 hoisting
+// 함수는 실행문보다 나중에 정의하는 것이 가능
+// 변수나 상수는 불가능! (var 제외)
+console.log(add(2, 7));
+function add (x, y) {
+  return x + y;
+}
+
+// 함수 생성 시점이 다르기 때문에 이 방법으로 선언한 함수는 호이스팅되지 않음
+console.log(div(8, 4));
+const div = function (x, y) {
+  return x / y;
+}
+
+console.log(div(8, 4));
+const div2 = (x, y) => x / y;
