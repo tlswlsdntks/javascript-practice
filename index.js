@@ -300,3 +300,10 @@ const weapons = [
 console.log(groups[1][2]); // 5
 console.log(weapons[2].damage); // 48
 console.log(weapons[0].design[0]); // 화룡검
+
+
+/**
+ * 원시 타입 vs 참조 타입
+ */
+// 콜스택/메모리힙 구조, 데이터 저장/참조 원리
+// https://charming-kyu.tistory.com/19
