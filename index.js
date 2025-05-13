@@ -381,4 +381,55 @@ const directionKor2 = {
   east: '동',
   west: '서'
 }[direction] ?? '무효'
-console.log(directionKo2);
+console.log(directionKor2);
+
+
+/**
+ * for 루프
+ */
+for (let i = 1; i <= 9; i++) {
+  for (let j = 1; j <= 9; j++) {
+    console.log(`${i} * ${j} = ${i * j}`);
+  }
+}
+
+// 객체
+const lunch = {
+  name: '라면',
+  taste: '매운맛',
+  kilocalories: 500,
+  cold: false
+}
+for (const key in lunch) { 
+  console.log(key, ':', lunch[key])
+}
+
+// 배열
+const numbers1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const numbers2 = [];
+for (let num of numbers1) {
+  num++; // 복사된 값
+  numbers2.push(num + 1);
+}
+console.log(numbers1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+console.log(numbers2); // [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+for (let i = 0; i < numbers1.length; i++) {
+  numbers1[i]++; // 실제 값에 인덱스로 접근 - 원본 배열의 내용 변경
+}
+console.log(numbers1); // [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+console.log(numbers2); // [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+// label - 중첩된 반복문을 명명하여 continue 또는 break에 사용 (널리 사용되지는 않음)
+outer:
+for (let i = 1; i < 10; i++) {
+  inner:
+  for (let j = 1; j < 10; j++) {
+    if (j % 2 === 0) continue inner;
+    if (i * j >= 30) continue outer;
+    if (j > 8) break inner;
+    if (i - j > 7) break outer;
+    console.log(i, j, i * j);
+  }
+}
+
