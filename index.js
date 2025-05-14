@@ -802,3 +802,100 @@ function changeValue (a, b, c) {
 }
 changeValue(x, y, z);
 console.log(x, y, z); // 1 {name: '전우치', age: 16} (3) [2, 2, 3]
+
+
+/**
+ * 객체의 기본 사용법들
+ */
+// 식별자 명명 규칙에 벗어나는 키 이름 사용시		
+const obj = {
+  1: '하나', // 숫자도 객체의 키로는 사용 가능
+  'ab-cd': 'ABCD', // 문자 포함 시 키도 따옴표로 감싸야 함
+  's p a c e': 'Space'
+}
+// 대괄호 프로퍼티 접근 연산자로만 가능
+console.log(
+  obj[1],
+  obj['ab-cd'],
+  obj['s p a c e']
+);
+// 오류 발생
+// console.log(
+//   obj.1,
+//   obj.ab-cd,
+//   obj.s p a c e
+// );
+
+// 객체나 배열을 키값으로 사용 시 문제
+// 객체나 배열은 []로 표기
+const objKey = { x: 1, y: 2 };
+const arrKey = [1, 2, 3];
+const obj = {
+  [objKey]: '객체를 키값으로',
+  [arrKey]: '배열을 키값으로'
+}
+// 객체와 배열이 그 자체가 아니라 문자열로 치환되어 키가 되는 것
+console.log(obj);
+// [object Object] : "객체를 키값으로"
+// 1,2,3 : "배열을 키값으로"
+
+// 문제 발생
+console.log(
+  obj['[object Object]'] // 문자열
+);
+console.log(
+  obj[{ a: 1, b: 2, c: 3 }], // 내용이 다른 객체이지만 동일한 [object Object]
+  obj['1,2,3'] // 문자열
+);
+
+// 프로퍼티 삭제
+const person1 = {
+  name: '홍길동',
+  age: 24,
+  school: '한국대',
+  major: '컴퓨터공학'
+};
+delete person1.age;
+delete person1['major'];
+delete person1.hobby; // 💡 오류가 발생하지는 않음
+
+// 키의 동적 사용
+const product1 = {
+  name: '노트북',
+  color: 'gray',
+  price: 800000
+}
+function addModifyProperty (obj, key, value) {
+  // obj.key = value; // 'key'라는 키를 찾음 -의도와 다른 작업 수행
+  obj[key] = value;
+}
+function deleteProperty (obj, key) {
+  // delete obj.key // 'key'라는 키를 찾음 -의도와 다른 작업 수행
+  delete obj[key];
+}
+
+// ES6 추가 문법 - 객체 선언 시 프로퍼티 키와 대입할 상수/변수명이 동일할 시 단축 표현
+const x = 1, y = 2;
+console.log(obj1);
+const obj2 = { x, y }
+console.log(obj2);
+
+function createProduct (name, price, quantity) {
+  return { name, price, quantity };
+}
+const product1 = createProduct('선풍기', 50000, 50);
+const product2 = createProduct('청소기', 125000, 32);
+console.log(product1, product2);
+
+// ES6 추가 문법 - 메서드 (method)
+// 객체에 축약표현으로 정의된 함수 프로퍼티
+// ES6 부터는 아래의 표현으로 정의된 함수만 메서드라고 부름
+const person = {
+  name: '홍길동',
+  salutate (formal) {
+    return formal
+    ? `안녕하십니까, ${this.name}입니다.`
+    : `안녕하세요, ${this.name}이에요.`;
+  }
+}
+console.log(person.salutate(true));
