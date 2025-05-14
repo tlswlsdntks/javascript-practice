@@ -729,3 +729,76 @@ console.log(
   combineArms(8, 3, add, mul, sub, div),
   combineArms(8, 3, add, mul, sub, div, (x, y) => x ** y)
 );
+
+
+/**
+ * 함수 더 알아보기
+ */
+// 중첩된 함수
+function addMulSub (x, y) {
+  const add = (a, b) => a + b;
+  const sub = (a, b) => a - b;
+  const mul = (a, b) => a * b;
+  return sub(mul(add(x, y), y), y);
+}
+console.log(addMulSub(8, 3)); // 30
+
+// 재귀 함수
+function sum(n) {
+  if (n === 0) return 0;
+  return n + sum(n - 1);
+}
+
+// 꼬리 재귀 함수
+function sumTail(n, acc = 0) {
+  if (n === 0) return acc;
+  return sumTail(n - 1, acc + n);
+}
+
+// 즉시 실행 함수 - IIFE (Immideately Invoked Function Expression)
+// 과거 - IIFE
+const initialMessage = (function () {
+  var month = 8;
+  var day = 15;
+  var temps = [28, 27, 27, 30, 32, 32, 30, 28];
+  var avgTemp = 0;
+  for (const temp of temps) {
+    avgTemp += temp
+  }
+  avgTemp /= temps.length;
+  return `${month}월 ${day}일 평균기온은 섭씨 ${avgTemp}도입니다.`;
+})();
+console.log(initialMessage); // 8월 15일 평균기온은 섭씨 29.25도입니다.
+console.log(month); // Uncaught ReferenceError: month is not defined
+
+// 오늘날 - 블록문 사용
+let initialMessage;
+  const month = 8;
+  const day = 15;
+  const temps = [28, 27, 27, 30, 32, 32, 30, 28];
+  let avgTemp = 0;
+  for (const temp of temps) {
+    avgTemp += temp
+  }
+  avgTemp /= temps.length;
+  initialMessage = `${month}월 ${day}일 평균기온은 섭씨 ${avgTemp}도입니다.`;
+};
+console.log(initialMessage); // 8월 15일 평균기온은 섭씨 29.25도입니다.
+console.log(month); // // Uncaught ReferenceError: month is not defined
+
+// 불변성 (immutability)
+let x = 1;
+let y = {
+  name: '홍길동',
+  age: 15
+}
+let z = [1, 2, 3];
+function changeValue (a, b, c) {
+  a++;
+  b.name = '전우치';
+  b.age++;
+  c[0]++;
+  console.log(a, b, c); // 2 {name: '전우치', age: 16} (3) [2, 2, 3]
+}
+changeValue(x, y, z);
+console.log(x, y, z); // 1 {name: '전우치', age: 16} (3) [2, 2, 3]
