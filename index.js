@@ -899,3 +899,72 @@ const person = {
   }
 }
 console.log(person.salutate(true));
+
+
+/**
+ * 생성자 함수
+ */
+// 객체 리터럴
+const chain1 = {
+  name: '판교',
+  no: 3,
+  introduce: function () { // 일반 함수 프로퍼티 정의
+    return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+  }
+};
+console.log(chain1, chain1 instanceof YalcoChicken); // {name: '판교', no: 3, introduce: ƒ} false
+
+// 객체 반환 함수
+function createYalcoChicken (name, no) {
+  return {
+    name, 
+    no,
+    introduce () { // 메서드 정의
+      return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+    }
+  }
+}
+const chain2 = createYalcoChicken('판교', 3)
+console.log(chain2, chain2 instanceof YalcoChicken); // {name: '판교', no: 3, introduce: ƒ} false
+
+// 생성자 함수
+function YalcoChicken (name, no) {
+  this.name = name;
+  this.no = no;
+  this.introduce = function () { // 생성자 함수 정의
+    return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+  }
+}
+const chain3 = new YalcoChicken('판교', 3); // 생성자 함수는 new 연산자와 함께 사용
+console.log(chain3, chain3 instanceof YalcoChicken); // YalcoChicken {name: '판교', no: 3, introduce: ƒ} true
+
+// 프로토타입 정의
+YalcoChicken.prototype.introEng = function () {
+  return `Welcome to Yalco Chicken at ${this.name}!`;
+};
+console.log(chain3.introEng()); // Welcome to Yalco Chicken at 판교!
+console.log(new YalcoChicken('판교', 3).introEng()); // Welcome to Yalco Chicken at 판교!
+
+// 생성자 함수 자체의 프로퍼티와 함수
+YalcoChicken.brand = '얄코치킨';
+YalcoChicken.contact = function () {
+  return `${this.brand}입니다. 무엇을 도와드릴까요?`;
+};
+const chain4 = new YalcoChicken('판교', 3);
+console.log(YalcoChicken.contact()); // 얄코치킨입니다. 무엇을 도와드릴까요?
+console.log(chain1.contact()); // chain1.contact is not a function
+
+// new 생략 실수 방지
+function YalcoChicken (name, no) {
+  this.name = name;
+  this.no = no;
+  this.introduce = function () {
+    return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+  }
+  // 해당 함수가 new 연산자 없이 호출되었을 경우 재귀호출을 통해 생성해 내보냄
+  if (!new.target) {
+    return new YalcoChicken(name, no); 
+  }
+}
+console.log(new YalcoChicken('판교', 3)); // YalcoChicken {name: '판교', no: 3, introduce: ƒ}
+console.log(YalcoChicken('판교', 3)); // YalcoChicken {name: '판교', no: 3, introduce: ƒ}
