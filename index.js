@@ -1292,3 +1292,90 @@ const bool = new Boolean(true);
 console.log(str.valueOf());
 console.log(num.valueOf());
 console.log(bool.valueOf());
+
+
+/**
+ * 빌트인 전역 프로퍼티와 함수
+ */
+// eval - 매우 특별한 경우가 아닌 이상 절대 사용하지 말 것
+const code = `
+  let x = 1;
+  console.log(x++, x);
+`;
+eval(code);
+
+// isFinite
+console.log(
+  isFinite(1),
+  isFinite(0),
+  isFinite('1'), // Number('1'): 1
+  isFinite(null), // Number(null): 0
+  isFinite(1/0),
+  isFinite(Infinity),
+  isFinite(-Infinity),
+  isFinite(NaN),
+  isFinite('abc')
+);
+
+// isNaN
+onsole.log(
+  isNaN(NaN), // typeof NaN: 'number'
+  isNaN('abcde'),
+  isNaN({}),
+  isNaN(undefined)
+);
+
+// parseFloat
+console.log(
+  parseFloat(123.4567),
+  parseFloat('123.4567'),
+  parseFloat(' 123.4567 '), // 123.4567
+  parseFloat('123.0'),
+  parseFloat('123'),
+  parseFloat(' 123ABC '), // 123
+  parseFloat([123, 456, 789]), // 123
+  parseFloat('ABC123'), // NaN
+  parseFloat({x: 1}), // NaN
+  parseFloat([]), // NaN
+  parseFloat(['a', 1, true]) // NaN
+);
+
+// parseInt
+console.log(
+  parseInt(123),
+  parseInt('123'),
+  parseInt(' 123.4567 '), // 123
+  parseInt('345.6789'), // 345
+  parseInt('abc'), // NaN
+  parseInt('{}'), // NaN
+  parseInt('[]'), // NaN
+  parseInt('11'), // 11
+  parseInt('11', 2), // 3
+  parseInt('11', 8), // 9
+  parseInt('11', 16), // 17
+  parseInt('11', 32), // 33
+  parseInt('11', 37), // Nan
+  parseInt('11', 'A') // Nan
+);
+
+// encodeURI
+const searchURI = 'https://www.google.com/search?q=얄코';
+const encodedURI = encodeURI(searchURI);
+console.log(encodedURI);
+
+// encodeURIComponent
+const keyword = '얄코';
+const encodedKeyword = encodeURIComponent(keyword);
+console.log(encodedKeyword);
+const searchURI = `https://www.google.com/search?q=${encodedKeyword}`;
+console.log(searchURI);
+
+// decodeURI
+const encodedURI = 'https://www.google.com/search?q=%EC%96%84%EC%BD%94';
+const decodedURI = decodeURI(encodedURI);
+console.log(decodedURI);
+
+// decodeURIComponen
+const encodedComp = '%EC%96%84%EC%BD%94';
+const decodedComp = decodeURI(encodedComp);
+console.log(decodedComp);
