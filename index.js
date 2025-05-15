@@ -1175,3 +1175,89 @@ class ConceptYalcoChicken extends YalcoChicken {
   }
 }
 ConceptYalcoChicken.contact();
+
+
+/**
+ * 객체의 스프레드와 디스트럭쳐링
+ */
+// 스프레드
+const class1 = {
+  a: 1, b: 'A', c: true
+};
+const class2 = {
+  d: { x: 10, y: 100 }, e: [1, 2, 3]
+};
+const class3 = {
+  ...class1, z: 0
+}
+const class4 = {
+  ...class2, ...class3, ...class2.d
+}
+console.log(class3);
+console.log(class4);
+
+// 중복되는 프로퍼티는 뒤의 것이 덮어씀 
+const class1 = {
+  ...{ a: 1, b: 2 },
+  ...{ b: 3, c: 4, d: 5 },
+  ...{ c: 6, d: 7, e: 8 }
+}
+console.log(class1);
+
+// 얕은 복사
+const class1 = {
+  x: 1,
+  y: { a: 2 },
+  z: [3, 4]
+};
+const class2 = { ...class1 };
+class1.x++;
+class1.y.a++;
+class1.z[0]++;
+console.log(class1);
+console.log(class2);
+
+// 디스트럭쳐링
+const obj1 = {
+  x: 1, y: 2, z: 3
+};
+const {x, z} = obj1;
+console.log(x, z);
+
+// 변수 이름을 다르게
+const obj1 = {
+  x: 1, y: 2, z: 3
+};
+const {x: a, y: b} = obj1;
+console.log(a, b);
+
+// 필요한 프로퍼티 값
+const array1 = [1, 2, 3, 4, 5];
+// const length = array1.length;
+console.log(array1);
+const { length } = array1;
+console.log(length);
+
+// 함수 인자값의 가독성을 위해 객체를 사용할 때
+const person1 = {
+  job: '개발자',
+  age: 28,
+  married: false,
+  name: '김철수',
+  blood: 'O' // 추가 인자 무관
+};
+function introduce(person) {
+  console.log(`제 이름은 ${person.name}, `
+    + `나이는 ${person.age}세구요. `
+    + `직업은 ${person.job}, `
+    + `${person.married ? '기혼' : '미혼'}입니다.`
+  )
+}
+function introduce({age, married, job, name}) {
+  console.log(`제 이름은 ${name}, `
+    + `나이는 ${age}세구요. `
+    + `직업은 ${job}, `
+    + `${married ? '기혼' : '미혼'}입니다.`
+  )
+}
+introduce(person1);
