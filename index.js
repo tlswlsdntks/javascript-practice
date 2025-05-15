@@ -1029,13 +1029,11 @@ console.log(chain1.order('양념치킨'));
 
 // 정적 static 필드와 메서드
 class YalcoChicken {
-
   // 정적 변수와 메서드
   static brand = '얄코치킨';
   static contact () {
     return `${this.brand}입니다. 무엇을 도와드릴까요?`;
   }
-
   constructor (name = '미정', no = 0) {
     this.name = name;
     this.no = no;
@@ -1048,3 +1046,80 @@ const chain1 = new YalcoChicken();
 console.log(chain1);
 console.log(YalcoChicken.contact()); // 얄코치킨입니다. 무엇을 도와드릴까요?
 console.log(chain1.contact()); // chain1.contact is not a function
+
+
+/**
+ * 접근자 프로퍼티와 은닉
+ */
+// 접근자 프로퍼티
+class YalcoChicken {
+  constructor (name, no) {
+    this.name = name;
+    this.no = no;
+  }
+  get chainTitle() {
+    return `${this.no}호 ${this.name}점`;
+  }
+  set chainNo(chainNo) {
+    if (typeof chainNo !== 'number') return;
+    if (chainNo <= 0) return;
+    this.no = chainNo;
+  }
+}
+const chain1 = new YalcoChicken('판교', 3);
+chain1.chainNo = 4;
+console.log(chain1, chain1.chainTitle);
+// YalcoChicken {name: '판교', no: 4}
+//   name: "판교"
+//   no: 4
+//   chainTitle: "4호 판교점"
+//   [[Prototype]]: Object
+//     chainTitle: "4호 판교점"
+//     constructor: class YalcoChicken
+//     set chainNo: ƒ chainNo(chainNo)
+//     get chainTitle: ƒ chainTitle()
+
+// 필드 이름과 setter의 이름이 같을 때 - 해결책
+class YalcoChicken {
+  constructor (name, no) {
+    this.name = name;
+    this.no = no;
+  }
+  get no () { 
+    return this._no + '호점'; 
+  }
+  set no (no) { 
+    this._no = no; // 무한반복
+  }
+}
+const chain1 = new YalcoChicken('판교', 3);
+console.log(chain1, chain1.no);	
+// YalcoChicken {name: '판교', _no: 3}
+//   name: "판교"
+//   _no: 3 // constructor의 no는 setter를 가리키고 실제 필드명은 _no가 됨
+//   no: "3호점"
+
+// private 필드를 통한 은닉
+class Employee {
+  #name = '';
+  #age = 0;
+  constructor (name, age) {
+    this.#name = name;
+    this.#age = age;
+  }
+  get name () {
+    // [n]: n + 1 번째 글자를 반환
+    return this.#name[0] + '모씨';
+  }
+  get age () {
+    return this.#age - (this.#age % 10) + '대';
+  }
+  set age (age) {
+    if (typeof age === 'number' && age > 0) {
+      this.#age = age;
+    };
+  }
+}
+const emp1 = new Employee('김복동', 22);
+emp1.age = 35;
+console.log(emp1.name, emp1.age); // 김모씨 30대
