@@ -261,7 +261,7 @@ person1.job = 'developer';
 person1['bloodtype'] = 'AB'
 console.log(person1);
 
-// 특정 프로퍼티의 값 변경 - const임에도 그 내용은 수정할 수 있음에 주목!
+// 특정 프로퍼티의 값 변경 - const 임에도 그 내용은 수정할 수 있음에 주목!
 person1.age = 26;
 person1['married'] = true
 console.log(person1);
@@ -497,10 +497,10 @@ function logCurrentTemp () {
   return `${currentTemp}`;
 }
 console.log('반환값:', logCurrentTemp()); // 반환값: undefined
-// undefined가 뜨는 이유
+// undefined 가 뜨는 이유
 // return 문이 정의되어 있지 않으면 undefined 반환
 
-// 호이스팅 hoisting
+// 호이스팅 (hoisting)
 // 함수는 실행문보다 나중에 정의하는 것이 가능
 // 변수나 상수는 불가능! (var 제외)
 console.log(add(2, 7));
@@ -876,9 +876,8 @@ function deleteProperty (obj, key) {
 
 // ES6 추가 문법 - 객체 선언 시 프로퍼티 키와 대입할 상수/변수명이 동일할 시 단축 표현
 const x = 1, y = 2;
+const obj1 = { x, y }
 console.log(obj1);
-const obj2 = { x, y }
-console.log(obj2);
 
 function createProduct (name, price, quantity) {
   return { name, price, quantity };
@@ -1261,3 +1260,35 @@ function introduce({age, married, job, name}) {
   )
 }
 introduce(person1);
+
+
+/**
+ * 전역 객체와 표준 빌트인 객체
+ */
+// 전역 객체 (global object)
+// 브라우저가 아닌Node.js에서는 globalThis 출력 시 표준 빌트인 객체들은 출력하지 않음
+console.log(globalThis);
+
+// 표준 빌트인 객체 (standard built-in objects)
+// Node.js에서는 globalThis 출력 시 표준 빌트인 객체들은 출력하지 않음
+console.log(globalThis);
+// 전역 프로퍼티로 제공됨 - globalThis 등을 붙이지 않고 바로 사용 가능
+console.log(Infinity);
+console.log(isNaN);
+console.log(Object);
+
+// 래퍼 객체 (wrapper object)
+const str = new String('abcde');
+const num = new Number(123.4567);
+const bool = new Boolean(true);
+console.log(typeof str, str);
+console.log(typeof num, num);
+console.log(typeof bool, bool);
+
+// valueOf 함수 - 래퍼 객체의 인스턴스에서 원시값 반환
+const str = new String('abcde');
+const num = new Number(123.4567);
+const bool = new Boolean(true);
+console.log(str.valueOf());
+console.log(num.valueOf());
+console.log(bool.valueOf());
