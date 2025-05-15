@@ -60,17 +60,17 @@
 			Node.js: 
 				🔗 디버깅을 위한 모듈 - 브라우저의 콘솔과 유사하게 동작
 			아래 코드를 브라우저와 Node.js(REPL, 코드파일 실행)에서 각각 실행
-				> console.log(this);
+				console.log(this);
 
 		💡 소프트웨어 외적으로는 영향을 끼치지 않음 - 개발자용 기능
 			콘솔을 열어 확인하지 않는 이상 보이지 않음
 
 	흔히 활용되는 console 기능들
- 		> console.log('로그 - 기본적인 출력');
-		> console.info('로그 - 기능적으로는 log 와 같음. 브라우저에 따라 용도 구분 가능);
-		> console.info('로그 - 기능적으로는 log 와 같음. 브라우저에 따라 용도 구분 가능');
-		> console.warn('경고 - 문제가 될 수 있는 부분');
-		> console.error('오류 - 에러 발생 상황');
+ 		console.log('로그 - 기본적인 출력');
+		console.info('로그 - 기능적으로는 log 와 같음. 브라우저에 따라 용도 구분 가능);
+		console.info('로그 - 기능적으로는 log 와 같음. 브라우저에 따라 용도 구분 가능');
+		console.warn('경고 - 문제가 될 수 있는 부분');
+		console.error('오류 - 에러 발생 상황');
  
 	주석 comment - 컴퓨터는 무시하는 메시지
 		사람에게 보여줄 목적으로 작성
@@ -84,8 +84,10 @@
 			ctrl + /
 
 		자바스크립트에서 주석을 다는 법
-			// 한 줄 짜리 주석
+			한 줄 짜리 주석
 			console.log('Hello'); // 이렇게 코드 옆에 다는 것도 가능
+			
+			여러줄 주석
 			/*
 		  		주석은 이와 같이 여러 줄에 걸쳐 작성할 수도 있습니다.
 		  		console.log('안찍힘');
@@ -94,13 +96,6 @@
 			*/
 			console.log('찍힘');
 			console.log('찍힘');
-
-		⚡️보다 간편한 방법
-			여러 줄이 선택된 상태에서 주석 단축키
-
-		💡 주석은 가능한 많이 달지 않는 것이 좋습니다.
-			주석이 많이 필요한 코드 : 나쁜 코드
-			주석 없이도 알아보기 쉬운 코드를 짤 것!
 
 	자바스크립트와 세미콜론 (;)
 		필요성에 대해 다양한 의견
@@ -113,15 +108,11 @@
 
 	I. 데이터를 담는 곳
 		console.log('Hello', '철수');
-		// 값들을 주머니에 담아 사용하기
 		const SALUTATION = 'Hello,';
 		let person = '철수';
 		console.log(SALUTATION, person);
 		person = '영희';
 		console.log(SALUTATION, person);
-		값의 의미 나타냄
-		값의 재활용
-		변경되는 상태를 가리키는 식별자
 
 	II. 변수 variable
 		담긴 값이 바뀔 수 있는 주머니
@@ -131,15 +122,11 @@
 
 		1. x란 변수를 선언(주머니 만듦)만 한 뒤 값을 넣음
 			let x;
-			console.log(x);
 			x = 1;
-			console.log(x);
 
 		2. 변수 선언과 값 넣기를 동시에 가능 (초기화 - 일반적인 사용법)
 			let x = 1;
 			console.log(x);
-			메모리상으로는 선언과 초기화를 따로 하는 것과 동일
-			undefined 할당 후 재할당
 
 		3. 다른 변수가 같은 값을 가질 때
 			let x = 1;
@@ -219,15 +206,17 @@
 		CPU: 
 			일하는 사람
 			컴퓨터의 뇌 - 작업을 진행하는 주체
+
 		보조기억장치 (SSD, HDD): 
 			서랍
 			상대적으로 저장공간은 넓고 접근속도는 느림
 			소프트웨어(코드)가 저장되는 곳
+			
 		메모리 (RAM): 
-		책상 위 공간
-		상대적으로 저장공간은 좁고 접근속도는 빠름
-		사람(CPU)이 서랍(보조기억장치)에 든 데이터를 꺼내 올려두고 작업을 하는 공간
-		변수와 상수를 비롯한 데이터들이 이곳에 만들어지고 사용됨
+			책상 위 공간
+			상대적으로 저장공간은 좁고 접근속도는 빠름
+			사람(CPU)이 서랍(보조기억장치)에 든 데이터를 꺼내 올려두고 작업을 하는 공간
+			변수와 상수를 비롯한 데이터들이 이곳에 만들어지고 사용됨
 
 
 자료형 - 데이터의 종류
@@ -318,10 +307,9 @@
 
 	⚠️ 자료형의 다름으로 일어날 수 있는 오류
 		특정 자료형에 대해서만 사용될 수 있는 기능 런타임 오류
-		// 주어진 문자열을 대문자로 바꾸는 함수
-		// 다른 자료형에 대한 예외처리 없음
-		function getUpperCase(str) {
-			return str.toUpperCase();
+		
+		function getUpperCase(str) { // 주어진 문자열을 대문자로 바꾸는 함수
+			return str.toUpperCase(); // 다른 자료형에 대한 예외처리 없음
 		}
 		console.log(getUpperCase('hello'));
 		// ⚠️ 오류 발생!
@@ -2390,10 +2378,11 @@ while과 do while
 			this.introduce = function () { // 생성자 함수 정의
 				return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
 			}
+			// return this
 		}
 
 		// 인스턴스 생성
-		const chain1 = new YalcoChicken('판교', 3); // 생성자 함수는 new 연산자와 함께 사용
+		const chain1 = new YalcoChicken('판교', 3); // 생성자 함수는 new 연산자와 함께 사용 - 암묵적으로 this 를 반환
 		const chain2 = new YalcoChicken('강남', 17);
 		const chain3 = new YalcoChicken('제주', 24);
 		console.log(chain1, chain1.introduce()); // YalcoChicken {name: '판교', no: 3, introduce: ƒ} '안녕하세요, 3호 판교점입니다!'
@@ -2544,3 +2533,184 @@ while과 do while
 			console.log(chain1, chain2);
 			// YalcoChicken {name: '판교', no: 3, introduce: ƒ}
 			// YalcoChicken {name: '강남', no: 17, introduce: ƒ}
+
+
+클래스	
+	💡 클래스는 함수
+		typeof 시 function으로 구분
+		일급 객체, 다른 곳에 할당 가능
+		class Dog {
+			bark () {
+				return '멍멍';
+			}
+		}
+		console.log(typeof Dog); // function
+
+		const 개 = Dog; // 할당될 수 있는 일급 객체
+		const 바둑이 = new 개();
+		console.log(바둑이); // Dog {}
+
+	I. 클래스 class를 사용하여 인스턴스 만들기
+		class YalcoChicken {
+			constructor (name, no) {
+				this.name = name;
+				this.no = no;
+			}
+
+			introduce () {
+				return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+			}
+		}
+		const chain1 = new YalcoChicken('판교', 3);
+		const chain2 = new YalcoChicken('강남', 17);
+		const chain3 = new YalcoChicken('제주', 24);
+		console.log(chain1, chain1.introduce());
+		console.log(chain2, chain2.introduce());
+		console.log(chain3, chain3.introduce());
+  
+		💡 Syntactic Sugar - 문법을 보다 읽기 쉽게 만드는 것
+		생성자 함수, 프로로타입 기반인 자바스크립트 문법을 타 언어의 클래스와 비슷한 문법으로 포장
+
+			⚠️ 그러나 클래스와 생성자 함수의 동작이 동일하지는 않음
+				// 차이 1. 클래스는 호이스팅되지 않음 (정확히는 되지만...)
+				const chain1 = new YalcoChicken('판교', 3); // 
+				class YalcoChicken {
+					constructor (name, no) {
+						this.name = name;
+						this.no = no;
+					}
+					introduce () {
+						return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+					}
+				}
+
+				// 차이 2. 클래스는 new 없이 사용하면 오류
+				// (생성자 함수는 오류 없이 undefined 반환)
+				const chain2 = YalcoChicken('강남', 17);
+		
+				// 이 외에도 차이들이 있음 - 클래스에는 이후 배울 엄격 모드 적용
+
+	II. constructor 메서드
+		인스턴스 생성시 인자를 받아 프로퍼티를 초기화함
+		클래스에 하나만 있을 수 있음 - 초과시 오류 발생
+		다른 메서드 이름을 쓸 수 없음
+		기본값 사용 가능
+		필요없을 (인자가 없을 때 등) 시 생략 가능
+		⚠️ 값을 반환하지 말 것! 생성자 함수처럼 암묵적으로 this 반환
+		class Person {
+			constructor (name, age, married = false) {
+				this.name = name;
+				this.age = age;
+				this.married = married;
+			}
+		}
+		const person1 = new Person('박영희', 30, true);
+		const person2 = new Person('오동수', 18);
+		console.log(person1, person2);
+
+		// 인스턴스 초기화가 필요없는 클래스
+		class Empty {}
+		console.log(new Empty());
+
+
+	III. 클래스의 메서드
+		💡 생성자 함수와 차이 - 프로토타입으로 들어감
+			// 로그 펼쳐서 비교해볼 것
+			class Dog {
+				bark () {
+					return '멍멍';
+				}
+			}
+			const badugi = new Dog();
+			console.log(badugi, badugi.bark());
+			Dog {}
+				[[Prototype]]: Object
+					bark: ƒ bark()
+					constructor: class Dog
+						[[Prototype]]: Object
+
+			function Dog2 () {
+				this.bark = function () {
+					return '멍멍';
+				}
+			}
+			const badugi2 = new Dog2();
+			console.log(badugi2, badugi2.bark());
+			Dog2 {bark: ƒ}
+				bark: ƒ ()
+					[[Prototype]]: Object
+
+	IV. 필드 field
+		constructor 밖에서, this.~ 없이 인스턴스의 프로퍼티 정의
+		2022 말 아직은 제안사항 (이후 🧪로 표시), 이미 다수 브라우저에서 지원
+		이후 배울 Babel로 해결 가능
+		// 필드값이 지정되어 있으므로 constructor 메서드 필요없음
+		class Slime {
+			hp = 50;
+			op = 4;
+			attack (enemy) {
+				enemy.hp -= this.op;
+				this.hp += this.op/4;
+			}
+		}
+		const slime1 = new Slime();
+		const slime2 = new Slime();
+		slime1.attack(slime2);
+		console.log(slime1, slime2);
+		
+		class YalcoChicken {
+			no = 0;
+			menu = { 
+				'후라이드': 10000, 
+				'양념치킨': 12000 
+			};
+			constructor (name, no) {
+				this.name = name;
+				if (no) this.no = no;
+			}
+			introduce () {
+				return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+			}
+			order (name) {
+				return `${this.menu[name]}원입니다.`
+			}
+		}
+		const chain1 = new YalcoChicken('(미정)');
+		const chain2 = new YalcoChicken('판교', 3);
+		console.log(chain1, chain1.introduce());
+		console.log(chain2, chain2.introduce());
+		chain1.menu['양념치킨'] = 13000;
+		console.log(chain1.order('양념치킨'));
+
+	V. 정적 static 필드와 메서드
+		인스턴스의 수와 관계없이 메모리 한 곳만 차지
+		인스턴스 없이 클래스 차원에서 호출
+		⚠️ 정적 메서드에서는 정적 필드만 사용 가능
+		class YalcoChicken {
+			// 정적 변수와 메서드
+			static brand = '얄코치킨';
+			static contact () {
+				return `${this.brand}입니다. 무엇을 도와드릴까요?`;
+			}
+			
+			constructor (name = '미정', no = 0) {
+				this.name = name;
+				this.no = no;
+			}
+			introduce () {
+				return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+			}
+		}
+		const chain1 = new YalcoChicken();
+		console.log(chain1);
+		YalcoChicken {name: '미정', no: 0}
+			name: "미정"
+			no: 0
+			[[Prototype]]: Object
+				constructor: class YalcoChicken
+					brand: "얄코치킨"
+					contact: ƒ contact()
+				introduce: ƒ introduce()
+				[[Prototype]]: Object
+		console.log(YalcoChicken.contact()); // 얄코치킨입니다. 무엇을 도와드릴까요?
+		console.log(chain1.contact()); // chain1.contact is not a function

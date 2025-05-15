@@ -968,3 +968,83 @@ function YalcoChicken (name, no) {
 }
 console.log(new YalcoChicken('판교', 3)); // YalcoChicken {name: '판교', no: 3, introduce: ƒ}
 console.log(YalcoChicken('판교', 3)); // YalcoChicken {name: '판교', no: 3, introduce: ƒ}
+
+
+/**
+ * 클래스
+ */
+// 생성자 함수와 차이 - 클래스는 프로토타입으로 들어감
+class Dog {
+  bark () {
+    return '멍멍';
+  }
+}
+const badugi = new Dog();
+console.log(badugi, badugi.bark());
+
+function Dog2 () {
+  this.bark = function () {
+    return '멍멍';
+  }
+}
+const badugi2 = new Dog2();
+console.log(badugi2, badugi2.bark());
+
+// 필드
+class Slime {
+  hp = 50;
+  op = 4;
+  attack (enemy) {
+    enemy.hp -= this.op;
+    this.hp += this.op/4;
+  }
+}
+const slime1 = new Slime();
+const slime2 = new Slime();
+slime1.attack(slime2);
+console.log(slime1, slime2);
+class YalcoChicken {
+  no = 0;
+  menu = { 
+    '후라이드': 10000, 
+    '양념치킨': 12000 
+  };
+  constructor (name, no) {
+    this.name = name;
+    if (no) this.no = no;
+  }
+  introduce () {
+    return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+  }
+  order (name) {
+    return `${this.menu[name]}원입니다.`
+  }
+}
+const chain1 = new YalcoChicken('(미정)');
+const chain2 = new YalcoChicken('판교', 3);
+console.log(chain1, chain1.introduce());
+console.log(chain2, chain2.introduce());
+chain1.menu['양념치킨'] = 13000;
+console.log(chain1.order('양념치킨'));
+
+// 정적 static 필드와 메서드
+class YalcoChicken {
+
+  // 정적 변수와 메서드
+  static brand = '얄코치킨';
+  static contact () {
+    return `${this.brand}입니다. 무엇을 도와드릴까요?`;
+  }
+
+  constructor (name = '미정', no = 0) {
+    this.name = name;
+    this.no = no;
+  }
+  introduce () {
+    return `안녕하세요, ${this.no}호 ${this.name}점입니다!`;
+  }
+}
+const chain1 = new YalcoChicken();
+console.log(chain1);
+console.log(YalcoChicken.contact()); // 얄코치킨입니다. 무엇을 도와드릴까요?
+console.log(chain1.contact()); // chain1.contact is not a function
