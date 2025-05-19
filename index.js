@@ -1513,3 +1513,60 @@ console.log(
 /**
  * Math 객체
  */
+// PI - 원주율
+console.log(
+  Math.PI
+);
+
+// E - 자연로그의 밑
+console.log(
+  Math.E
+);
+
+// abs - 절대값(0 이상) 반환
+const isEqual = (a, b) => {
+  return Math.abs(a - b) < Number.EPSILON;
+}
+console.log(
+  isEqual(0.1 + 0.2, 0.3)
+);
+
+// ceil 올림, round 반올림, floor 내림, trunc 정수부만
+for (const num of [1.4, 1.6, -1.4, -1.6]) {
+  console.log(
+    num + ' : ',
+    Math.ceil(num),
+    Math.round(num),
+    Math.floor(num),
+    Math.trunc(num),
+  );
+}
+
+// pow - ~로 거듭제곱
+// ** 연산자로 더 간결히 표현 가능
+console.log(
+  Math.pow(4, 2), // 4 ** 2
+  Math.pow(4, 1), // 4 ** 1
+  Math.pow(4, 0), // 4 ** 0
+  Math.pow(4, -1) // 4 ** -1
+);
+
+// sqrt - 제곱근
+console.log(
+  Math.sqrt(25), // 5
+  Math.sqrt(9), // 3
+  Math.sqrt(2),
+  Math.sqrt(1),
+  Math.sqrt(0)
+);
+
+// max, min - 인자들 중 최대값과 최소값
+console.log(
+  Math.max(8, 5, 9, 6, 3, 1, 4, 2, 7),
+  Math.min(8, 5, 9, 6, 3, 1, 4, 2, 7)
+);
+
+// random - 0~1 사이의 무작위 값
+console.log(
+  Math.random()
+);
