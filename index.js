@@ -1844,3 +1844,218 @@ console.log(orgArr);
 console.log(arr1);
 console.log(arr2);
 console.log(arr3);
+
+
+/**
+ * 고차함수 메서드들
+ */
+// forEach -  각 요소를 인자로 콜백함수 실행
+// 콜백함수의 인자가 둘일 때
+const arr = [10, 20, 30, 40, 50];
+const logWithIndex = (itm, idx) => {
+  console.log(`[${idx}]: ${itm}`);
+}
+arr.forEach(logWithIndex);
+// 콜백함수의 인자가 셋일 때
+const arr = [1, 2, 3, 4, 5];
+arr.forEach((itm, idx, arr) => {
+  // 💡 세 번째 인자는 원본 배열의 참조임
+  arr[idx]++;
+  console.log(itm);
+});
+
+// map - 각 요소를 주어진 콜백함수로 처리한 새 배열 반환
+const orgArr = [
+  { name: '사과', cat: '과일', price: 3000 },
+  { name: '오이', cat: '채소', price: 1500 },
+  { name: '당근', cat: '채소', price: 2000 },
+  { name: '살구', cat: '과일', price: 2500 },
+  { name: '피망', cat: '채소', price: 2500 },
+  { name: '딸기', cat: '과일', price: 5000 }
+];
+const arr1 = orgArr.map(itm => {
+  // 💡 블록 안에서는 return 문 필요함
+  return {
+    name: itm.name,
+    cat: itm.cat
+  }
+});
+console.log(arr1);
+// 디스트럭쳐링 사용 (편의에 따라 적절히)
+const arr2 = orgArr.map(({name, cat}) => {
+  return { name, cat }
+});
+console.log(arr2);
+const joined = orgArr
+  .map(({name, cat, price}, idx) => {
+    return `${idx + 1}: [${cat[0]}] ${name}: ${price}원`
+  })
+  .join('\n - - - - - - - - - \n');
+console.log(joined);
+
+// find, findLast, findIndex, findLastIndex - 주어진 기준으로 검색
+const arr = [
+  { name: '사과', cat: '과일', price: 3000 },
+  { name: '오이', cat: '채소', price: 1500 },
+  { name: '당근', cat: '채소', price: 2000 },
+  { name: '살구', cat: '과일', price: 2500 },
+  { name: '피망', cat: '채소', price: 3500 },
+  { name: '딸기', cat: '과일', price: 5000 }
+];
+const isCheapFruit = i => {
+  return i.cat === '과일' && i.price < 3000;
+}
+console.log(
+  arr.find(({cat}) => cat === '채소').name,
+  arr.findLast(isCheapFruit).name
+);
+
+// some, every - 어떤/모든 요소가 기준을 충족하는지 확인
+const arr = [
+  { name: '사과', cat: '과일', price: 3000 },
+  { name: '오이', cat: '채소', price: 1500 },
+  { name: '당근', cat: '채소', price: 2000 },
+  { name: '살구', cat: '과일', price: 2500 },
+  { name: '피망', cat: '채소', price: 3500 },
+  { name: '딸기', cat: '과일', price: 5000 }
+];
+const isCheapVege = i => {
+  return i.cat === '채소' && i.price < 2000;
+}
+const isPlant = ({cat}) => {
+  return ['과일', '채소'].includes(cat);
+}
+console.log(
+  arr.some(isCheapVege),
+  arr.every(isCheapVege),
+  arr.some(isPlant),
+  arr.every(isPlant)
+);
+
+// filter - 주어진 기준을 충족하는 요소들로 새 배열 만들어 반환
+const arr = [
+  { name: '사과', cat: '과일', price: 3000 },
+  { name: '오이', cat: '채소', price: 1500 },
+  { name: '당근', cat: '채소', price: 2000 },
+  { name: '살구', cat: '과일', price: 2500 },
+  { name: '피망', cat: '채소', price: 3500 },
+  { name: '딸기', cat: '과일', price: 5000 }
+];
+console.log(
+  '과일 목록:',
+  arr
+  .filter(({cat}) => cat === '과일')
+  .map(({name}) => name)
+  .join(', ')
+);
+
+// reduce, reduceRight - 주어진 콜백함수에 따라 값들을 접어 나감
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(
+  arr.reduce((prev, curr) => {
+    return {
+      odd: prev.odd + curr % 2,
+      even: prev.even + (1 - (curr % 2)),
+    }
+  }, { odd: 0, even: 0 })
+);
+const arr = ['가', '나', '다', '라', '마', '바', '사'];
+console.log(
+  arr.reduce((prev, curr, idx) => {
+    console.log(`p: ${prev}, c: ${curr}, i: ${idx}`);
+    return prev + curr;
+  })
+);
+// reduceRight은 인덱스도 거꾸로 진행됨에 주목
+console.log(
+  arr.reduceRight((prev, curr, idx) => {
+    console.log(`p: ${prev}, c: ${curr}, i: ${idx}`);
+    return prev + curr;
+  })
+);
+const arr = [
+  { name: '사과', cat: '과일', price: 3000 },
+  { name: '오이', cat: '채소', price: 1500 },
+  { name: '당근', cat: '채소', price: 2000 },
+  { name: '살구', cat: '과일', price: 2500 },
+  { name: '피망', cat: '채소', price: 3500 },
+  { name: '딸기', cat: '과일', price: 5000 }
+];
+['과일', '채소'].forEach(category => {
+  console.log(
+    `${category}의 가격의 합:`,
+    arr
+    .filter(({cat}) => cat === category)
+    .map(({price}) => price)
+    .reduce((prev, curr) => prev + curr)
+  );
+});
+
+// sort - 배열을 ( 주어진 기준대로 ) 정렬
+let randomWord = 'DBKGICAHFEJ';
+console.log(
+  randomWord
+  .split('')
+  .sort()
+  // .reverse()
+  .join('')
+);
+console.log(randomWord);
+// 셔플
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  console.log(
+    arr.sort((a, b) => {
+      console.log(`a: ${a}, b: ${b}`);
+      return Math.random() - 0.5;
+    })
+  );
+// 아래의 실습결과는 환경이 달라도 같음
+const arr = [1, 2, 30, 400, 10, 100, 1000];
+console.log(
+  arr.sort((a, b) => a - b)
+);
+console.log(
+  arr.sort((a, b) => b - a)
+);
+const arr = ['F', 'E', 'I', 'A', 'H', 'C', 'D', 'J', 'G', 'B'];
+console.log(
+  arr.sort((a, b) => a > b ? 1 : -1)
+);
+console.log(
+  arr.sort((a, b) => a < b ? 1 : -1)
+);
+const arr = [
+  { name: '사과', cat: '과일', price: 3000 },
+  { name: '오이', cat: '채소', price: 1500 },
+  { name: '당근', cat: '채소', price: 2000 },
+  { name: '살구', cat: '과일', price: 2500 },
+  { name: '피망', cat: '채소', price: 3500 },
+  { name: '딸기', cat: '과일', price: 5000 }
+];
+console.log(
+  arr
+  .sort((a, b) => {
+    if (a.cat !== b.cat) {
+      return a.cat > b.cat ? 1 : -1;
+    }
+    return a.price > b.price ? 1 : -1;
+  })
+  .map(({name, cat, price}, idx) => {
+    return `${idx + 1}: [${cat[0]}] ${name}: ${price}원`
+  })
+  .join('\n - - - - - - - - - \n')
+);
+
+// flatMap - map 한 다음 flat 매핑해서 펼침
+const arr = [1, 2, 3, 4, 5];
+// 💡 한 단계만 펼침
+console.log(
+  arr.flatMap(i => [i, [i], [[i]]])
+)
+
+const word = '하나 둘 셋 넷 다섯 여섯 일곱 여덟 아홉 열';
+console.log(
+  word
+  .split(' ')
+  .flatMap(i => i.split(''))
+);
