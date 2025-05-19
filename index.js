@@ -1635,3 +1635,70 @@ const timezoneOffset = now.getTimezoneOffset() * 60 * 1000; // 현재 시간대�
 const isoStr = new Date(now.getTime() - timezoneOffset).toISOString();
 console.log(isoStr);
 console.log(now.toString());
+
+
+/**
+ * 자바스크립트 배열의 특징과 생성
+ */
+// of
+const arr1 = Array.of(3);
+const arr2 = Array.of(1, 2, 3);
+const arr3 = Array.of('ABC', true, null);
+console.log(arr1, arr2, arr3);
+
+// from
+const arr1 = Array.from([1, 2, 3]);
+const arr2 = Array.from('ABCDE');
+const arr3 = Array.from({
+  '0': true,
+  '1': false,
+  '2': null,
+  length: 3
+});
+console.log(arr1, arr2, arr3);
+
+// 유사배열객체: length와 인덱싱 프로퍼티를 가진 객체
+const arrLike = {
+  0: '🍎',
+  1: '🍌',
+  2: '🥝',
+  3: '🍒',
+  4: '🫐',
+  length: 5
+};
+// 일반 for문으로 순회 가능
+for (let i = 0; i < arrLike.length; i++) {
+  console.log(arrLike[i]);
+}
+// for ... of 문은 이터러블에서만 사용 가능
+for (const item of arrLike) {
+  console.log(item);
+}
+// 배열은 이터러블, 성능도 향상
+for (const item of Array.from(arrLike)) {
+  console.log(item);
+}
+
+// Array.from - 얕은 복사
+const arr1 = [1, 2, 3];
+const arr2 = Array.from(arr1);
+arr2.push(4);
+console.log(arr1, arr2);
+arr1[0] = 0;
+console.log(arr1, arr2);
+
+// Array.from - 참조타입 요소의 내부값이 바뀔 경우
+const arr1 = [{x: 1}, {x: 2}];
+const arr2 = Array.from(arr1);
+arr2.push({x: 3});
+arr1[0].x = 0;
+console.log(arr1, arr2);
+
+// Array.from - 두 번째 인자(매핑 mapping)
+const arr1 = [1, 2, 3, 4, 5];
+const arr2 = Array.from(arr1, x => x + 1);
+const arr3 = Array.from(arr1, x => x * x);
+const arr4 = Array.from(arr1, x => x % 2 ? '홀' : '짝');
+console.log(arr2);
+console.log(arr3);
+console.log(arr4);
