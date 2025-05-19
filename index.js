@@ -1570,3 +1570,68 @@ console.log(
 console.log(
   Math.random()
 );
+
+
+/**
+ * Date 객체
+ */
+// 단위별 숫자 입력
+// 연, 월 ( 0부터 시작 ) 필수
+// 일, 시, 분, 초, 밀리초 옵션 없을 시 0
+console.log(
+  new Date(2022, 8)
+);
+console.log(
+  new Date(2022, 8, 20, 14, 35)
+);
+console.log(
+  new Date(2022, 8, 20, 14, 35, 47, 789)
+);
+
+// now
+// 현재의 밀리초 숫자값 (앞으로 UTC 1970/1/1 자정부터 경과값 의미) 반환
+console.log(Date.now());
+
+// parse, UTC
+// 주어진 시간의 밀리초 숫자값 반환
+// parse는 dateString, UTC는 단위별 숫자를 받음
+console.log(
+  Date.parse('August 20, 2022 00:00:00 UTC')
+);
+
+// toLocaleString
+// 주어진 언어 코드를 기준으로 표현한 문자열 반환
+// 인자가 없을 시 시스템의 언어 적용
+const now = new Date();
+console.log(
+  now.toLocaleString()
+);
+console.log(
+  now.toLocaleString('ko-KR')
+);
+
+// setter, getter
+// 연, 월 ( 0부터 시작 ) 필수
+const now = new Date();
+const year = now.getFullYear();
+const month = now.getMonth() + 1;
+const date = now.getDate();
+const day = '일월화수목금토'[now.getDay()]; 
+console.log(
+  `오늘은 ${year}년 ${month}월 ${date}일, ${day}요일입니다.`
+);
+
+// getTimezoneOffset
+// 현재 시간대의 오프셋을 시간 단위로 변환하는 표현
+console.log(
+  new Date().getTimezoneOffset() / 60
+);
+
+// toISOString
+// ISO 8061이란 형식의 문자열 반환
+// UTC 기준으로 반환
+const now = new Date();
+const timezoneOffset = now.getTimezoneOffset() * 60 * 1000; // 현재 시간대의 오프셋을 밀리초 단위로 변환
+const isoStr = new Date(now.getTime() - timezoneOffset).toISOString();
+console.log(isoStr);
+console.log(now.toString());
