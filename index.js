@@ -1463,3 +1463,53 @@ console.log(word.repeat(3)); // 호이호이호이
 const word = '밥 좀 먹자, 밥. 응? 야, 밥 좀 먹자고 밥, 밥!';
 console.log(word.replace('밥', '라면')); // 라면 좀 먹자, 밥. 응? 야, 밥 좀 먹자고 밥, 밥!
 console.log(word.replaceAll('밥', '라면')); // VM872:3 라면 좀 먹자, 라면. 응? 야, 라면 좀 먹자고 라면, 라면!
+
+
+/**
+ * Number 객체
+ */
+// EPSILON
+console.log(Number.EPSILON);
+console.log(0.1 + 0.2);
+console.log((0.1 + 0.2) - 0.3 < Number.EPSILON)
+
+// parseInt, parseFloat
+console.log(
+  Number.parseInt('123.4567'), // 123
+  Number.parseFloat('123.4567') // 123.4567
+);
+
+// isInteger
+console.log(
+  Number.isInteger(123),
+  Number.isInteger(123.45)
+);
+
+// toFixed
+console.log(
+  // 인자가 없으면 0을 받은 것과 같음
+  (111.234567).toFixed(),
+  (111.234567).toFixed(0)
+);
+console.log(
+  (111.234567).toFixed(1),
+  (111.234567).toFixed(2)
+);
+console.log(
+  // 반올림
+  (111.234567).toFixed(3), // 111.235
+  (111.234567).toFixed(4) // 111.2346
+);
+
+// toString
+console.log(
+  (11).toString(), // 11
+  (11).toString(2), // 1011
+  (11).toString(8), // 13
+  (11).toString(16) // b
+);
+
+
+/**
+ * Math 객체
+ */
