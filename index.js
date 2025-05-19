@@ -1702,3 +1702,145 @@ const arr4 = Array.from(arr1, x => x % 2 ? '홀' : '짝');
 console.log(arr2);
 console.log(arr3);
 console.log(arr4);
+
+
+/**
+ * 배열의 기본 메서드들
+ */
+// isArray - 배열인지 여부를 반환
+console.log(
+  Array.isArray([1, 2, 3]),
+  Array.isArray('123'),
+  Array.isArray('123'.split('')) // '123'.split() 과 다름
+);
+
+// at
+const arr = [
+  '한놈', '두시기', '석삼', '너구리', '오징어'
+];
+console.log(
+  arr.at(1), arr.at(2)
+);
+
+// includes
+const arr = [1, 2, 3, 'abc', true];
+console.log(
+  arr.includes(2),
+  arr.includes('abc'),
+  arr.includes(true),
+);
+// 참조형 데이터의 경우
+const obj1 = { x: 1, y: 2 };
+const obj2 = { x: 1, y: 2 };
+const arr = [
+  obj1,
+  { x: 3, y: 4 }
+];
+console.log(
+  arr.includes(obj1), // true
+  arr.includes(obj2), // false
+  arr.includes({ x: 1, y: 2 }), // false
+  arr.includes({ x: 3, y: 4 }) // false
+);
+
+ // indexOf, lastIndexOf
+const arr = [1, 2, 3, 2, 1];
+console.log(
+  arr.indexOf(2),
+  arr.lastIndexOf(2),
+  arr.indexOf(4) // -1
+);
+
+// join
+console.log(
+  classIntro(3, '김민지', '영희', '철수', '보라')
+); // 호이스팅
+function classIntro (classNo, teacher, ...children) {
+  return `${classNo}반의 선생님은 ${teacher}, `
+    + `학생들은 ${children.join(', ')}입니다.`
+}
+
+// push - 값을 뒤에 추가하고, 수정된 배열의 길이를 반환
+const arr = [1, 2, 3];
+arr.push('a');
+
+// unshift - 값을 앞에 추가하고, 수정된 배열의 길이를 반환
+const arr = [5, 6, 7];
+arr.unshift('a');
+
+// pop - 배열에서 값을 제거하여 반환
+const arr = ['a','b','c'];
+arr.pop();
+
+// shift - 값을 앞에서 제거하고 반환
+const arr = ['a','b','c'];
+arr.shift();
+
+// splice - 원하는 위치에 요소(들)을 추가 및 삭제
+// 2번 인덱스부터 2개 요소 제거
+const arr = [1, 2, 3, 4, 5, 6, 7];
+arr.splice(2, 2);
+console.log(arr); // [1, 2, 5, 6, 7]
+// 1번 인덱스부터 3개 요소 제거 후 '가', '나', '다' 추가
+arr.splice(1, 3, '가', '나', '다');
+console.log(arr); // [1, '가', '나', '다', 7]
+
+// fill - 배열을 특정 값으로 채움
+// 중간의 빈 값도 채움
+const arr1 = [1, 2, , , 4, 5];
+arr1.fill(7);
+console.log(arr1);
+// 인자가 둘일 때: (채울 값, ~부터)
+const arr2 = new Array(10);
+arr2.fill(2, 3);
+console.log(arr1);
+// 인자가 셋일 때: (채울 값, ~부터, ~ 전까지)
+arr2.fill(3, 6, 9);
+console.log(arr1);
+
+// reverse - 배열의 순서를 뒤집음
+const arr = [1, 2, 3, 4, 5, 6, 7];
+const arrRev = arr.reverse();
+// 원본 배열 뒤집힘
+console.log(arr, arrRev);
+
+// concat - 배열에 다른 배열이나 값을 이어붙인 결과를 반환
+const arr1 = [1, 2, 3];
+const arr2 = ['a', 'b', 'c'];
+const arr3 = [true, false];
+const arr4 = arr1.concat('ABC', arr2, arr3, 100);
+console.log(arr4);
+
+// slice - 인자로 주어진 범주의 값을 잘라 반환
+const arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const arr2 = arr1.slice(3); // [4, 5, 6, 7, 8, 9]
+const arr3 = arr1.slice(3, 7); // [4, 5, 6, 7]
+
+// flat - 인자로 주어진 깊이만큼 배열을 펼쳐 반환
+const orgArr = [
+  1, 2,
+  [3, 4],
+  [5, [6, [7, 8]]]
+];
+const arr0 = orgArr.flat(); // 인자가 없으면 1을 넣은 것과 같음
+const arr1 = orgArr.flat(1);
+const arr2 = orgArr.flat(2);
+const arr3 = orgArr.flat(3);
+console.log('N:', arr0);
+console.log('1:', arr1);
+console.log('2:', arr2);
+console.log('3:', arr3);
+// 원시값과 참조값 비교
+const orgArr = [
+  1, { x: 2 }, [{ x: 3 }, {x: 4}], 5
+];
+const arr1 = orgArr.concat(6);
+const arr2 = orgArr.slice(0, 3);
+const arr3 = orgArr.flat();
+orgArr[0] = 0;
+orgArr[1].x = 20;
+orgArr[2][0].x = 30;
+console.log(orgArr);
+console.log(arr1);
+console.log(arr2);
+console.log(arr3);
