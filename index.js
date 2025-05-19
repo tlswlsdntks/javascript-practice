@@ -1379,3 +1379,87 @@ console.log(decodedURI);
 const encodedComp = '%EC%96%84%EC%BD%94';
 const decodedComp = decodeURI(encodedComp);
 console.log(decodedComp);
+
+
+/**
+ * String 객체
+ */
+// toUpperCase, toLowerCase
+function areSameWords (word1, word2) {
+  return word1.toLowerCase() === word2.toLowerCase();
+}
+console.log(
+  areSameWords('Hello', 'hello'),
+  areSameWords('가나다', '가나다'),
+  areSameWords('ABC', 'DEF')
+);
+
+// at
+console.log(
+  '안녕하세요~'.at(1), // 녕
+  '안녕하세요~'.at(-1) // ~
+);
+
+// indexOf, lastIndexOf
+const word = '아니, 하나마나한 걸 왜 하나?';
+console.log (
+  word.indexOf('하나'), // 4
+  word.lastIndexOf('하나') // 14
+);
+
+// includes, startsWith, endsWith
+const sentence = '옛날에 호랑이 한 마리가 살았어요.';
+for (const word of ['옛날에', '호랑이', '살았어요.', '나무꾼']) {
+  console.log(
+    'includes', word, sentence.includes(word)
+  );
+  console.log(
+    'startsWith', word, sentence.startsWith(word)
+  );
+  console.log(
+    'endsWith', word, sentence.endsWith(word)
+  );
+  console.log('- - - - -');
+}
+
+// search
+console.log(
+  '하루가 7번 지나면 1주일이 되는 거야.'.search(/[0-9]/),
+  '하루가 일곱 번 지나면 일주일이 되는 거야.'.search(/[0-9]/)
+);
+
+// slice
+const word = 'ABCDEFGHIJKL';
+console.log(
+  word.slice(4, 8),
+  word.slice(-4)
+);
+
+// split
+const word = '하나 하면 할머니가 지팡이 짚고서 잘잘잘';
+console.log(
+  word.split(' ', 2),
+  word.split(' ', 4)
+)
+const sentence = '옛날에 호랑이 한 마리가 살았어요.';
+const splitted = sentence.split(' ');
+const firstWord = splitted[0];
+const lastWord = splitted[splitted.length - 1];
+// const lastWord = splitted.at(-1)
+console.log(firstWord, lastWord);
+
+// trim, trimStart, trimEnd
+const word = '  Hello World!  ';
+console.log(`--${word}--`);
+console.log(`--${word.trim()}--`);
+console.log(`--${word.trimStart()}--`);
+console.log(`--${word.trimEnd()}--`);
+
+// repeat
+const word = '호이';
+console.log(word.repeat(3)); // 호이호이호이
+
+// replace, replaceAll
+const word = '밥 좀 먹자, 밥. 응? 야, 밥 좀 먹자고 밥, 밥!';
+console.log(word.replace('밥', '라면')); // 라면 좀 먹자, 밥. 응? 야, 밥 좀 먹자고 밥, 밥!
+console.log(word.replaceAll('밥', '라면')); // VM872:3 라면 좀 먹자, 라면. 응? 야, 라면 좀 먹자고 라면, 라면!
