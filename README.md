@@ -5151,3 +5151,177 @@ Date 객체
 				.with(6, '일곱')
 				.with(9, '열');
 				console.log(newArray, orgArray);
+
+
+Object
+	I. Object 클래스
+		이제까지 배운 자바스크립트 객체들의 원형
+		각각 따로 출력해서 [[Prototype]]을 펼쳐 볼 것
+		console.log(
+			new String('ABC') instanceof Object,
+			new Number(123) instanceof Object,
+			[] instanceof Object,
+			(function () {}) instanceof Object,
+			globalThis instanceof Object
+		);
+
+		생성자 함수
+			// 빈 객체 생성
+			console.log(
+				new Object(),
+				new Object(null),
+				new Object(undefined),
+			);
+
+			// 각 값에 적합한 래핑함수로 작용
+			console.log(
+				new Object(1),
+				new Object('ABC'),
+				new Object(true),
+				new Object([1, 2, 3])
+			);
+
+	II. 주요 정적 메서드
+		1. assign - 인자로 주어진 객체(들)의 프로퍼티들을 대상 객체에 붙여넣음
+			⭐️ 대상 객체를 변경
+			결과 객체를 반환
+			⚠️ 얕은 복사
+			인자들:
+				대상 객체
+				원본 객체(들)
+
+			const intro1 = {
+				name: '홍길동'
+			};
+			const intro2 = { ...intro1 };
+			const personal = {
+				age: 25,
+				married: false
+			};
+			const career = {
+				job: '개발자',
+				position: '팀장'
+			}
+			console.log(intro1, intro2);
+			Object.assign(intro1, personal);
+			console.log(intro1);
+
+			// 둘 이상의 원본에서 가져올 수도 있음
+			Object.assign(intro2, personal, career);
+			console.log(intro2);
+
+			// 프로퍼티의 키가 같을 경우 뒤에 오는 인자의 것이 덮어씀
+			const obj1 = new Object();
+			const obj2 = { x: 1, y: 2 };
+			const obj3 = { y: 3 };
+			const obj4 = { z: { a: 1 }}
+			Object.assign(obj1, obj2, obj3, obj4);
+			console.log(obj1);
+
+			// 얕은 복사
+			obj2.x = 0;
+			obj4.z.a = 2;
+			console.log(obj1);
+
+		2. keys, values, entries - 객체의 키 / 값 / [키, 값]을 배열로 반환
+			const obj = {
+				x: 1,
+				y: 2,
+				z: 3
+			};
+
+			console.log(
+				Object.keys(obj),
+			);
+			console.log(
+				Object.values(obj),
+			);
+			console.log(
+				Object.entries(obj),
+			);
+
+			console.log(
+				Object
+					.keys(globalThis)
+					.sort()
+			);
+
+			// 배열에 사용할 경우
+			const arr = [1, 2, 3, 4, 5];
+			console.log(
+				Object.keys(arr),
+				Object.values(arr),
+				Object.entries(arr)
+			);
+
+			// 객체가 아닐 경우 객체로 변환
+			const str = 'ABCDEFG';
+			console.log(
+				Object.keys(str),
+				Object.values(str),
+				Object.entries(str)
+			);
+
+		3. preventExtensions - 프로퍼티 추가 금지
+			isExtensible - 해당 여부 확인
+			const obj = { x: 1, y: 2 };
+			console.log(Object.isExtensible(obj)); // true
+
+			Object.preventExtensions(obj);
+			console.log(Object.isExtensible(obj));
+
+			obj.x++; // 프로퍼티 수정 가능
+			delete obj.y // 프로퍼티 삭제 가능
+			obj.z = 3; // 💡 프로퍼티 추가 금지
+			console.log(obj);
+
+			// 배열에 적용시
+			const arr = [1, 2];
+			Object.preventExtensions(arr);
+			arr[2] = 3; // 동작하지 않음
+			console.log(arr);
+			arr.push(3); // ⚠️ 오류 발생
+			console.log(arr);
+			
+		4. seal - 프로퍼티 추가와 삭제 금지
+			isSealed - 해당 여부 확인
+			const obj = { x: 1, y: 2 };
+			console.log(Object.isSealed(obj)); // false
+
+			Object.seal(obj);
+			console.log(Object.isSealed(obj));
+
+			obj.x++; // 프로퍼티 수정 가능
+			delete obj.y // 💡 프로퍼티 삭제 금지
+			obj.z = 3; // 💡 프로퍼티 추가 금지
+			console.log(obj);
+		
+		5. freeze - 객체 동결 - 읽기만 가능
+			isFrozen - 해당 여부 확인
+			// 객체에 사용
+			const obj = { x: 1, y: 2 };
+			console.log(Object.isFrozen(obj)); // flase
+
+			Object.freeze(obj);
+			console.log(Object.isFrozen(obj));
+
+			obj.x++; // 💡 프로퍼티 수정 불가
+			delete obj.y // 💡 프로퍼티 삭제 금지
+			obj.z = 3; // 💡 프로퍼티 추가 금지
+			console.log(obj);
+
+			// 배열에 사용
+			const arr = [1];
+			Object.freeze(arr);
+			arr[0]++; // 💡 요소 수정, 추가, 삭제 불가
+			console.log(arr);
+
+			⚠️ 얕게만 적용
+			const obj = {
+				x: 1,
+				y: { a: 1 }
+			};
+			Object.freeze(obj);
+			obj.x++;
+			obj.y.a++;
+			console.log(obj);
