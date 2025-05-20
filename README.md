@@ -5056,3 +5056,98 @@ Date 객체
 				[a, b, c, d] = [d, a, b, c];
 				console.log([a, b, c, d].join('   '));
 			}
+
+
+[업데이트] 자바스크립트 2023 (ES14)에 추가된 기능들
+	배열 관련
+		1. 부작용을 제거한 메서드들
+			원본 배열의 내용을 수정하지 않음
+			함수형 패러다임의 기조를 따름
+
+			toSorted : 정렬된 결과를 반환
+				const array0 = [3, 1, 4, 5, 2];
+				array0.sort(); // 메서드 호출이 부작용을 유발
+				console.log(array0);
+
+				const array1 = [3, 1, 4, 5, 2];
+				const array2 = [...array1];
+				console.log(array1, array2);
+				const array1Sorted = array1.sort(); // 새 배열 반환이 아닌 레퍼런스 복사
+				const array2Sorted = array2.toSorted();
+				console.log(array1Sorted, array2Sorted);
+				array1Sorted.push(6);
+				array2Sorted.push(6);
+				console.log(array1Sorted, array2Sorted);
+				console.log(array1, array2);
+				​
+				// es14 전에는...
+				array3 = [3, 1, 4, 5, 2];
+				array3Sorted = [...array3].sort(); // 이제는 이렇게 할 필요 없음
+				console.log(array3, array3Sorted);
+				array4 = [3, 6, 1, 10, 4, 8, 7, 5, 9, 2];
+
+				// 역시 고차함수 - 콜백함수를 받음
+				array4Sorted = array4.toSorted((a, b) => a % 2 - b % 2);
+				console.log(array4, array4Sorted);
+				​
+			toReversed : 뒤집힌 결과를 반환
+				array5 = [3, 1, 4, 5, 2];
+				array6 = [...array5];
+				array5Reversed = array5.reverse();
+				array6Reversed = array6.toReversed();
+				array5Reversed.push(6);
+				array6Reversed.push(6);
+				console.log(array5Reversed, array6Reversed);
+				console.log(array5, array6);
+				​
+			toSpliced : 잘린 결과를 반환
+				const array7 = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+				const array8 = [...array7];
+				array7.splice(4, 3, 'A', 'B', 'C'); // 부작용 유발
+				console.log(array7);
+				const array9 = array8.toSpliced(4, 3);
+				const array10 = array8.toSpliced(4, 3, 'A', 'B', 'C');
+				console.log(array9, array10);
+				console.log(array8);
+				​
+		2. 뒤에서부터 찾는 메서드들
+			findLast : 주어진 조건에 해당하는, 뒤에서부터 첫 요소 반환
+				findLastIndex : 위 요소의 인덱스 반환
+				const myArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+				// 앞에서부터 찾는 메서드들
+				const firstMult3 = myArray.find(i => i % 3 === 0);
+				const firstMult3Idx = myArray.findIndex(i => i % 3 === 0);
+				console.log(firstMult3, firstMult3Idx);
+				​
+				// es14 전에는...
+				const lastMult3 = [...myArray].reverse().find(i => i % 3 === 0);
+				const lastMult3Idx = 
+					myArray.lastIndexOf(
+						[...myArray]
+						.reverse()
+						.find(j => j % 3 === 0)
+					);
+				console.log(lastMult3, lastMult3Idx);
+				​
+				const lastMult3 = myArray.findLast(i => i % 3 === 0);
+				const lastMult3Idx = myArray.findLastIndex(i => i % 3 === 0);
+				console.log(lastMult3, lastMult3Idx);
+				​
+		3. 부분적으로 수정한 배열을 반환
+			with 
+				첫 번째 인자로 주어진 인덱스의 값을 두 번째 인자로 주어진 값으로 수정한 새 배열 반환
+				const orgArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+				// 아래의 코드는 원본 배열을 수정
+				// orgArray[3] = '넷';
+				​
+				원본 수정 없이 4번째 요소를 ‘넷’으로 바꾼 배열을 얻고 싶다면?
+				const newArray = [...orgArray.slice(0, 3), '넷', ...orgArray.slice(4, 10)];
+				console.log(newArray, orgArray);
+				​
+				const newArray = orgArray.with(3, '넷');
+				console.log(newArray, orgArray);
+				const newArray = orgArray
+				.with(3, '넷')
+				.with(6, '일곱')
+				.with(9, '열');
+				console.log(newArray, orgArray);
