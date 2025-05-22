@@ -2645,3 +2645,86 @@ const obj1 = {
 const obj2 = structuredClone(obj1);
 console.log(obj1);
 console.log(obj2);
+
+
+/**
+ * 2, 8, 16진법과 비트 연산자
+ */
+
+// 2진법 (binary) - 0b 뒤로 숫자 0, 1 를 붙여 표현
+[
+  0b1,
+  0b10,
+  0b11,
+  0b100,
+  0b101
+].forEach(i => console.log(i))
+console.log(
+  0b2 // 토큰으로 인식 - 오류
+);
+
+// 8진법 (octal) - 0o 뒤로 숫자 0~7 를 붙여 표현
+[
+  0o7,
+  0o10,
+  0o100,
+  0o1000,
+].forEach(i => console.log(i))
+
+// 16진법 (hexadecimal) - 0x 뒤로 숫자 0~9, A~F 를 붙여 표현
+[
+  0x9,
+  0xA,
+  0xB,
+  0xC,
+  0xd,
+  0xe,
+  0xf,
+  0x10,
+  0xFFFFFF
+].forEach(i => console.log(i))
+
+// 상호변환
+console.log(
+  parseInt(hexStr, 16).toString(2),
+  parseInt(binStr, 2).toString(8),
+  parseInt(octStr, 8).toString(16)
+);
+
+// 비트 연산자
+let x = 0b1010101010; // 682
+let y = 0b1111100000; // 992
+// 양쪽 모두 1인 자리에 1
+const bitAnd = x & y;
+console.log(bitAnd);
+console.log(
+  bitAnd.toString(2)
+);
+// 한 쪽이라도 1인 자리에 1
+const bitOr = x | y
+console.log(bitOr);
+console.log(
+  bitOr.toString(2)
+);
+// 양쪽이 다른 자리에 1
+const bitXor = x ^ y;
+console.log(bitXor);
+console.log(
+  bitXor.toString(2)
+);
+// 각 비트 반전
+console.log(~x);
+console.log(
+  (~x).toString(2)
+);
+console.log(~y);
+console.log(
+  (~y).toString(2)
+);
+// 시프트 연산자
+let x = 0b101; // 5
+console.log(x.toString(2), x);
+x = x << 1;
+console.log(x.toString(2), x);
+x = x >> 1;
+console.log(x.toString(2), x);
