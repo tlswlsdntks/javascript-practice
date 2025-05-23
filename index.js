@@ -3786,3 +3786,47 @@ function add(x, x) {
   return x + x;
 }
 console.log(add(1, 2));
+
+
+/**
+ * 옵셔널 체이닝
+ */
+// ?. - 옵셔널 체이닝 optional chaining 연산자
+// 호출 대상이 undefined나 null이어도 오류를 발생시키지 않음 - 대신 undefined 반환
+let undef = undefined;
+console.log(
+  undef?.x,
+  undef?.['x'],
+  undef?.[1],
+  {}.func?.()
+);
+
+// 결과에 prop3이 있다면 가져와야 하는 상황 - 다음과 같은 상황에서 에러를 피하려면?
+const rand = () => Math.random() < 0.75;
+const notSure = () => rand() ? {
+  prop1: rand() ? {
+    prop2: rand() ? {
+      prop3: rand() ? '성공!' : undefined
+    } : undefined
+  } : undefined
+} : undefined;
+console.log(JSON.stringify(notSure()));
+const result = notSure();
+console.log(JSON.stringify(result));
+console.log(result.prop1.prop2.prop3);
+
+// 옵셔널 체이닝을 사용한 방법
+const result = notSure();
+console.log(
+  result?.prop1?.prop2?.prop3
+);
+
+// 유무가 불확실한 함수를 호출할 때도 유용
+const objs = [
+  { func () { console.log(1) } },
+  {},
+  { func () { console.log(2) } },
+  {},
+  { func () { console.log(3) } },
+]
+objs.forEach(o => o.func?.());
