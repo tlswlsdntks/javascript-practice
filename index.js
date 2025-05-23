@@ -3280,3 +3280,163 @@ function switchWorker(iter) {
 }
 workersIter1 = workersIter(team1);
 switchWorker(workersIter1); // 반복 실행해 볼 것
+
+
+/**
+ * 제너레이터
+ */
+	제너레이터 (generator) - 이터러블과 이터레이터를 보다 간결하게 구현 가능
+  function* genFunction () {
+    console.log('하나를 반환합니다.');
+    yield '하나';
+    console.log('둘을 반환합니다.');
+    yield '둘';
+    console.log('셋을 반환합니다.');
+    yield '셋';
+  }
+  const genFunc = genFunction();
+  console.log( genFunc.next() );
+
+// 함수 선언
+function* genFunc1 () {
+  yield 'genFunc1';
+}
+
+// 값으로 대입
+const genFunc2 = function* () {
+  yield 'genFunc2';
+}
+
+// 객체의 메서드
+const obj = {
+  * genFunc3 () {
+    yield 'genFunc3';
+  }
+}
+
+// 클래스의 메서드
+class MyClass {
+  * genFunc4 () {
+    yield 'genFunc4';
+  }
+}
+
+// 테스트
+console.log(
+  genFunc1().next().value,
+  genFunc2().next().value,
+  obj.genFunc3().next().value,
+  new MyClass().genFunc4().next().value,
+);
+		
+// 제너레이터 객체
+// 이터레이터이자 이터러블
+// next 메서드를 실행하면 다음 yield까지 실행 후 중지
+function* genFunction () {
+  yield 1;
+  yield 2;
+  yield 3;
+  yield 4;
+  yield 5;
+}
+let genObj = genFunction();
+
+// 로그 펼쳐서 살펴볼 것
+console.log( genObj );
+
+// 이터러블임 확인
+console.log( genObj[Symbol.iterator] );
+console.log([...genObj]);
+
+// 순회 후에는 재생성 필요
+console.log([...genObj]);
+
+// 이터러블로서는 바로 호출이 적합
+console.log([...genFunction()]);
+
+for (const num of genFunction()) {
+  console.log(num);
+}
+
+// 재생성
+genObj = genFunction(); 
+// 이터레이터임 확인
+for (let i = 0; i < 7; i++) {
+  console.log(genObj.next());
+}
+
+// 예제 1. 주사위를 열 번 굴리는 제너레이터
+function* diceTenTimes () {
+  let count = 0;
+  const maxCount = 10;
+  while (count++ < maxCount) {
+    yield Math.ceil(Math.random() * 6);
+  }
+}
+// 이터러블
+console.log(
+  [...diceTenTimes()]
+);
+// 이터레이터 - 객체로 반환 뒤 사용
+// 다시 순회시 재생성 필요
+let diceGenObj = diceTenTimes();
+
+for (let i = 0; i < 12; i++) {
+  console.log(diceGenObj.next());
+}
+
+// 예제 2. 피보나치 제너레이터
+function* fibonacci (maxCount) {
+  let count = 0;
+  let [x, y] = [0, 1];
+
+  while (count++ < maxCount) {
+    [x, y] = [y, x + y];
+    yield y;
+  }
+}
+console.log(
+  [...fibonacci(10)]
+);
+
+let fiboGenObj = fibonacci(5);
+for (let i = 0; i < 7; i++) {
+  console.log(
+    fiboGenObj.next()
+  );
+}
+		
+// 예제 3. 순번 제너레이터
+function* workersGen (people) {
+  let idx = 0;
+  while (idx < people.length) {
+    yield people[idx++];
+  }
+}
+
+const team1 = [
+  '철수', '영희', '돌준', '미나', '준희'
+];
+console.log(
+  [...workersGen(team1)]
+);
+
+// 이터레이터로 사용
+// 인원 순번 넘기기
+function switchWorker(iter) {
+  const next = iter.next();
+  console.log(
+    next.done
+    ? '-- 인원 없음 -- '
+    : `${next.value} 차례입니다.`
+  );
+}
+
+workersIter1 = workersGen(team1);
+switchWorker(workersIter1);
+switchWorker(workersIter1);
+switchWorker(workersIter1);
+switchWorker(workersIter1);
+switchWorker(workersIter1);
+switchWorker(workersIter1);
+switchWorker(workersIter1);
