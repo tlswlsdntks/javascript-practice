@@ -2905,3 +2905,99 @@ Array.prototype[Symbol.for('average')] = function () {
   return sum/count
 }
 [1, 2, 3, 4, 5, 6][Symbol.for('average')]();
+
+
+/**
+ * Set
+ */
+// Set - 중복되지 않는 값들의 집합
+// 동일한 값을 여러 번 포함할 수 없음
+// 값들의 순서가 무의미함
+
+// Set 생성
+const set1 = new Set();
+
+// add 메서드 - 요소 추가
+set1.add(1);
+set1.add('A');
+set1.add(true);
+// 이미 포함된 요소는 추가하지 않음
+set1.add(1);
+set1.add(true);
+
+// 배열을 인자 넣으면 생성 + 초기화
+// 중복된 요소 제거
+const set2 = new Set([1, 1, 1, 'A', true]);
+
+// delete 메서드 - 요소 제거 & 성공 여부 반환
+console.log(
+  set2.delete('A'),
+  set2.delete(true),
+  set2.delete(100)
+);
+
+// 메서드 체이닝
+set2
+  .add(3)
+  .add(4)
+  .add(5)
+// 참조형이므로 둘이 같은 Set을 가리킴
+const set3 = set2.add(2);
+console.log(set2, set3);
+
+// size 프로퍼티 - 요소의 개수
+console.log(
+  set2.size
+);
+
+// keys, values, entries 메서드 - 값 / 값 / [값, 값] 반환
+// key를 value와 같이 취급
+console.log(
+  set2.keys(),
+  set2.values(),
+  set2.entries()
+);
+
+// clear 메서드 - 모든 요소들을 삭제
+set2.clear();
+
+// 참조형 데이터의 경우, 각기 다른 것으로 인식 (참조하는 주소가 다르므로)
+const objSet1 = new Set()
+objSet1
+  .add({ x: 1, y: 2 })
+  .add({ x: 1, y: 2 })
+  .add([1, 2, 3])
+  .add([1, 2, 3]);
+console.log(objSet1);
+
+// 같은 것들로 인식
+const obj = { x: 1, y: 2 };
+const arr = [1, 2, 3];
+const objSet2 = new Set()
+  .add(obj)
+  .add(obj)
+  .add(arr)
+  .add(arr);
+console.log(objSet2)
+
+// for ... of 문
+for (item of set) {
+  console.log(item);
+}
+
+// 스프레드 문법
+const newArr = [...set];
+console.log(newArr);
+// 활용 - 중복을 제거한 배열 반환
+const arr1 = [1, 1, 1, 2, 2, 3, 4, 5];
+const arr2 = [...new Set(arr1)];
+console.log(arr2);
+
+// 디스트럭쳐링
+const [x, y] = set;
+console.log(x);
+console.log(y);
+const [a, b, ...rest] = set;
+console.log(a);
+console.log(b);
+console.log(rest);
