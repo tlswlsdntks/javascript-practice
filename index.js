@@ -3727,3 +3727,62 @@ console.log(hoisted1)
 console.log(hoisted2); // 오류
 let hoisted2 = 'Hello';
 console.log(hoisted2)
+
+
+/**
+ * 엄격 모드 strict mode
+ */
+// 자바스크립트 문서 최상단에 작성 - 문서 전체에 적용
+notDeclared = 1;
+'use strict'; // 쌍따옴표도 가능
+notDeclared = 1; // 오류 발생!
+			
+// 문서, script 태그별로만 적용 - 여러 .js파일이 페이지에 사용될 시 각각 작성해야 함
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<script src="./1.js"></script>
+<script src="./2.js"></script>
+</head>
+</html>
+// 1.js
+'use strict';
+x = 1;
+console.log(x); // 오류 발생
+// 2.js
+y = 2;
+console.log(y); // 오류 발생하지 않음
+	
+// 특정 함수의 최상단에 작성 - 해당 함수에만 적용
+notDec1 = 1;
+function strictFunc () {
+  'use strict';
+  notDec2 = 2;
+  console.log(notDec2);
+}
+console.log(notDec1);
+strictFunc();
+
+// 변수, 함수, 인자 등 삭제불가한 것을 삭제시 오류 발생
+let toDelete1 = 1;
+delete toDelete1;
+console.log('1.', toDelete1);
+
+function funcToDel1 () { console.log(true); }
+delete funcToDel1;
+console.log('2.', funcToDel1);
+
+'use strict';
+let toDelete2 = 1;
+delete toDelete2;
+
+'use strict';
+function funcToDel2 () { console.log(true); }
+delete funcToDel2;
+
+// 인자명 중복시 오류 발생
+// 'use strict';
+function add(x, x) {
+  return x + x;
+}
+console.log(add(1, 2));
