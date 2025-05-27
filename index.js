@@ -4403,3 +4403,149 @@ const badugi = new Dog('바둑이');
 badugi.bark();	
 // 프로토타입 확인	
 console.log(badugi);
+
+
+/**
+ * 프로토타입과 상속
+ */
+// Object.create 메서드 - 주어진 것을 프로토타입으로 갖는 객체를 생성
+function Bird (name, sound) {
+  this.name = name;
+  this.sound = sound;
+}
+Bird.prototype.fly = function () {
+  console.log(`${this.name} ${this.sound} 비행중`);
+}
+function Eagle (name, sound, prey) {
+  this.name = name;
+  this.sound = sound;
+  this.prey = prey;
+}
+Eagle.prototype = Object.create(Bird.prototype);
+Eagle.prototype.hunt = function () {
+    console.log(`${this.name} ${this.prey} 사냥중`);
+}
+const bird = new Bird('새돌이', '파닥파닥');
+const eagle = new Eagle('독돌이', '푸드덕', '토끼');
+console.log(bird);
+console.log(eagle);
+console.log(
+  eagle instanceof Bird,
+  bird instanceof Eagle
+);
+bird.fly();
+eagle.fly();
+eagle.hunt();
+
+// 부모의 생성자 활용하기
+function Bird (name, sound) {
+  this.name = name;
+  this.sound = sound;
+}
+Bird.prototype.fly = function () {
+  console.log(`${this.name} ${this.sound} 비행중`);
+}
+function Eagle (name, sound, prey) {
+  // call 호출방식 사용
+  Bird.call(this, name, sound);
+  this.prey = prey
+}
+Eagle.prototype = Object.create(Bird.prototype);
+Eagle.prototype.hunt = function () {
+  console.log(`${this.name} ${this.prey} 사냥중`);
+}
+
+const eagle = new Eagle('독돌이', '푸드덕', '토끼');
+console.log(eagle);
+eagle.fly();
+eagle.hunt();
+
+// 클래스 활용하기
+class Bird {
+  constructor (name, sound) {
+    this.name = name;
+    this.sound = sound;
+  }
+  fly () {
+    console.log(`${this.name} ${this.sound} 비행중`);
+  }
+}
+class Eagle extends Bird {
+  constructor (name, sound, prey) {
+    super(name, sound);
+    this.prey = prey;
+  }
+  hunt () {
+    console.log(`${this.name} ${this.prey} 사냥중`);
+  }
+}
+const bird = new Bird('새돌이', '파닥파닥');
+const eagle = new Eagle('독돌이', '푸드덕', '토끼');
+console.log(bird);
+console.log(eagle);		
+bird.fly();
+eagle.fly();
+eagle.hunt();
+
+//무엇의 인스턴스인지 프로그램상에서 이름으로 파악할 때 유용
+console.log(
+  Object.getPrototypeOf(bird).constructor.name,
+  Object.getPrototypeOf(eagle).constructor.name,
+  Object.getPrototypeOf(
+    Object.getPrototypeOf(eagle)
+  ).constructor.name,
+);
+
+// Mixin - Object.assign으로 조립하기
+// 여럿을 조합하여 가져올 수 있음
+const runner = {
+  run : function () {
+    console.log(`${this.name} 질주중`);
+  }
+}
+const swimmer = {
+  swim: function () {
+    console.log(`${this.name} 수영중`);
+  }
+}
+const flyer = {
+  fly: function () {
+    console.log(`${this.name} 비행중`);
+  }
+}
+const hunter = {
+  hunt: function () {
+    console.log(`${this.name} 사냥중`);
+  }
+}
+class Owl {
+  constructor (name) {
+    this.name = name;
+  }
+}
+class FlyingFish {
+  constructor (name) {
+    this.name = name;
+  }
+}
+class PolarBear {
+  constructor (name) {
+    this.name = name;
+  }
+}
+Object.assign(Owl.prototype, flyer, hunter);
+Object.assign(FlyingFish.prototype, flyer, swimmer);
+Object.assign(PolarBear.prototype, runner, swimmer, hunter);
+const owl = new Owl('붱돌이');
+const f_fish = new FlyingFish('날치기');
+const p_bear = new PolarBear('극곰이');
+console.log(owl);
+console.log(f_fish);
+console.log(p_bear);
+owl.fly();
+owl.hunt();
+f_fish.swim();
+f_fish.fly();
+p_bear.run();
+p_bear.swim();
+p_bear.hunt();
