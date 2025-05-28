@@ -5152,6 +5152,61 @@ Date 객체
 				.with(9, '열');
 				console.log(newArray, orgArray);
 
+	나머지 변화들
+		 I. WeakMap 과 WeakSet 관련
+		 	### 1. 가비지 컬렉션
+				- 프로그램이 더 이상 사용하지 않는 메모리 영역을 자동으로 비워줌
+				- 호텔에서 퇴실한 방들을 예약가능으로 등록하는 직원
+				- 언제 돌지는 알 수 없음
+				- C 등에서는 개발자가 직접 / 현대적 언어들은 가비지 컬렉터가…
+			
+				function myFunction() {
+					const myVar = 1; // 🧹 함수 실행 후 다음 가비지 컬렉션 때
+					console.log(myVar);
+				}
+				myFunction();
+
+				let myObj1 = { a: 1, b: 2 };
+				myObj1 = null; // 🧹 다음 가비지 컬렉션 때
+
+				let myArr = [
+					{ a: 1, b: 2 },
+					{ a: 3, b: 4 },
+					{ a: 5, b: 6 } // 🧹 pop 후 다음 가비지 컬렉션 때
+				];
+				myArr.pop();
+
+			### 2. `WeakMap` & `WeakSet`
+				- 실무에서 사용되는 일은 드묾
+				- ⭐️ 키로 `object` 만 받을 수 있(었)음
+				- 키로 등록된 객체가 `null` 이 되면 가비지 컬렉션 때 치워지고 해당 키의 값도 사라짐
+
+				let obj1 = { name: 'keyboard', price: 50000 };
+				let obj2 = { name: 'mouse', price: 40000 }
+				
+				const itemWS = new WeakSet();
+				itemWS.add(obj1);
+				itemWS.add(obj2);
+
+				const itemWM = new WeakMap();
+				itemWM.set(obj1, '신상품');
+				itemWM.set(obj2, '시즌한정상품');
+				
+				obj2 = null; // 🧹 다음 가비지 컬렉션 때 객체, 그리고 맵에서 해당 값 사라짐
+
+			### 3. 💡 ES14부터는 `WeakMap`에 심볼도 키로 사용 가능
+				- 보다 유연한 메모리 최적화
+				- 제약사항
+				- 등록된 심볼과 Well-known 심볼은 사용 불가
+				let symbolKey = Symbol('할인쿠폰');
+				itemWM.set(symbolKey, '말일까지');
+
+		II. 해시뱅 문법 관련
+			- 해시뱅(`#!`) 주로 유닉스에서, 파일의 코드를 실행할 인터프리터를 지정
+			- CLI에서 코드를 실행할 경우 `#!` 로 시작하는 부분은 무시하도록 기능 추가
+    	- 시스템에서 미리 제거할 필요 없이, 자바스크립트 엔진 단에서 해당 줄을 무시
+			#!/usr/bin/env node
+			console.log('이제는 문제없어요');
 
 Object
 	I. Object 클래스
